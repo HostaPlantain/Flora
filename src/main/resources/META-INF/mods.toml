@@ -1,0 +1,21 @@
+
+modLoader="javafml"
+loaderVersion="[31,)"
+
+issueTrackerURL="https://github.com/HostaPlantain/Flora" #optional
+
+
+[[mods]]
+
+modId="flora"
+version="0.0.1"
+displayName="Flora Libs"
+
+displayURL="https://github.com/HostaPlantain/Flora" #optional
+logoFile="logo.png" #optional
+credits="Hosta_Plantain" #optional
+authors="Hosta_Plantain" #optional
+
+description='''
+Inside the Secret World of Plants
+'''
