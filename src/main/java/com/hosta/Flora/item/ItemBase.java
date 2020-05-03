@@ -1,12 +1,12 @@
 package com.hosta.Flora.item;
 
-import com.hosta.Flora.module.AbstractMod;
+import com.hosta.Flora.IMod;
 
 import net.minecraft.item.Item;
 
 public class ItemBase extends Item {
 
-	public ItemBase(AbstractMod mod)
+	public ItemBase(IMod mod)
 	{
 		this(mod.getDefaultProp());
 	}

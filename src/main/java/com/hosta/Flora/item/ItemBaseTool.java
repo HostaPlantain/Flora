@@ -1,10 +1,10 @@
 package com.hosta.Flora.item;
 
-import com.hosta.Flora.module.AbstractMod;
+import com.hosta.Flora.IMod;
 
 public class ItemBaseTool extends ItemBase {
 
-	public ItemBaseTool(int maxDamageIn, AbstractMod mod)
+	public ItemBaseTool(int maxDamageIn, IMod mod)
 	{
 		this(maxDamageIn, mod.getDefaultProp());
 	}

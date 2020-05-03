@@ -1,10 +1,9 @@
 package com.hosta.Flora.registry;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import com.hosta.Flora.module.AbstractMod;
+import com.hosta.Flora.IMod;
 import com.hosta.Flora.module.AbstractModule;
 
 import net.minecraft.block.Block;
@@ -13,16 +12,37 @@ import net.minecraft.potion.Effect;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
-public class Registries {
+public class RegistryHandler {
+
+	private final IMod MOD;
 
 	private final List<AbstractModule>	MODULES	= new ArrayList<AbstractModule>();
 
+	public RegistryHandler(IMod instance, AbstractModule... modules)
+	{
+		this.MOD = instance;
+		this.register(modules);
+		RegistryHandler.registerEventHandler(this);
+	}
+
+	public static void registerEventHandler(Object handler)
+	{
+		FMLJavaModLoadingContext.get().getModEventBus().register(handler);
+	}
+
 	public void register(AbstractModule... modules)
 	{
-		MODULES.addAll(Arrays.asList(modules));
+		for (AbstractModule module : modules)
+		{
+			module.set(this.MOD, this);
+			MODULES.add(module);
+		}
 	}
 
 	private final RegistryBlocks	BLOCKS	= new RegistryBlocks();
@@ -51,33 +71,38 @@ public class Registries {
 		return entry;
 	}
 
-	public void registerBlocks(IForgeRegistry<Block> registry)
+	@SubscribeEvent
+	public void registerBlocks(RegistryEvent.Register<Block> event)
 	{
 		MODULES.forEach(module -> module.registerBlocks());
-		BLOCKS.registerFinal(registry);
+		BLOCKS.registerFinal(event.getRegistry());
 	}
 
-	public void registerItems(IForgeRegistry<Item> registry, AbstractMod mod)
+	@SubscribeEvent
+	public void registerItems(RegistryEvent.Register<Item> event)
 	{
 		MODULES.forEach(module -> module.registerItems());
-		ITEMS.registerFinal(registry);
-		BLOCKS.registerItems(registry, mod);
+		ITEMS.registerFinal(event.getRegistry());
+		BLOCKS.registerItems(event.getRegistry(), MOD);
 	}
 
-	public void registerEffects(IForgeRegistry<Effect> registry)
+	@SubscribeEvent
+	public void registerEffects(RegistryEvent.Register<Effect> event)
 	{
 		MODULES.forEach(module -> module.registerEffects());
-		EFFECTS.registerFinal(registry);
+		EFFECTS.registerFinal(event.getRegistry());
 	}
 
-	public void registerPotions(IForgeRegistry<Potion> registry)
+	@SubscribeEvent
+	public void registerPotions(RegistryEvent.Register<Potion> event)
 	{
 		MODULES.forEach(module -> module.registerPotions());
-		POTIONS.registerFinal(registry);
+		POTIONS.registerFinal(event.getRegistry());
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public void registerModels()
+	@SubscribeEvent
+	public void registerModels(ModelRegistryEvent event)
 	{
 		MODULES.forEach(module -> module.registerModels());
 		BLOCKS.registerRenders();

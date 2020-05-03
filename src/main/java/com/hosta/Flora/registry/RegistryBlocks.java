@@ -1,8 +1,8 @@
 package com.hosta.Flora.registry;
 
+import com.hosta.Flora.IMod;
 import com.hosta.Flora.block.IItemName;
 import com.hosta.Flora.block.IRenderType;
-import com.hosta.Flora.module.AbstractMod;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -18,7 +18,7 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 @SuppressWarnings("rawtypes")
 public class RegistryBlocks extends AbstractRegistry {
 
-	public void registerItems(IForgeRegistry<Item> registry, AbstractMod mod)
+	public void registerItems(IForgeRegistry<Item> registry, IMod mod)
 	{
 		for (IForgeRegistryEntry block : LIST)
 		{
