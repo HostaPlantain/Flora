@@ -2,22 +2,33 @@ package com.hosta.Flora.registry;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
-@SuppressWarnings("rawtypes")
-public abstract class AbstractRegistry {
+public class AbstractRegistry<T extends IForgeRegistryEntry<T>> {
 
-	protected final List<IForgeRegistryEntry> LIST = new ArrayList<>();
+	protected final List<T> LIST = new ArrayList<T>();
+	private final Predicate<IForgeRegistryEntry<?>> PRE;
 
-	public void register(IForgeRegistryEntry entry)
+	public AbstractRegistry(Predicate<IForgeRegistryEntry<?>> pre)
 	{
-		LIST.add(entry);
+		this.PRE = pre;
+	}
+
+	public boolean match(IForgeRegistryEntry<?> entry)
+	{
+		return PRE.test(entry);
 	}
 
 	@SuppressWarnings("unchecked")
-	public void registerFinal(IForgeRegistry registry)
+	public void register(IForgeRegistryEntry<?> entry)
+	{
+		LIST.add((T) entry);
+	}
+
+	public void registerFinal(IForgeRegistry<T> registry)
 	{
 		LIST.forEach(entry -> registerNamed(registry, entry));
 	}

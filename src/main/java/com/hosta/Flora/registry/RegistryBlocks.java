@@ -13,14 +13,17 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 
-@SuppressWarnings("rawtypes")
-public class RegistryBlocks extends AbstractRegistry {
+public class RegistryBlocks extends AbstractRegistry<Block> {
+
+	public RegistryBlocks()
+	{
+		super(entry -> entry instanceof Block);
+	}
 
 	public void registerItems(IForgeRegistry<Item> registry, IMod mod)
 	{
-		for (IForgeRegistryEntry block : LIST)
+		for (Block block : LIST)
 		{
 			Item item;
 			if (block instanceof IItemName)
@@ -39,7 +42,7 @@ public class RegistryBlocks extends AbstractRegistry {
 	@OnlyIn(Dist.CLIENT)
 	public void registerRenders()
 	{
-		for (IForgeRegistryEntry block : LIST)
+		for (Block block : LIST)
 		{
 			if (block instanceof IRenderType)
 			{

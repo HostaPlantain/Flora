@@ -8,6 +8,7 @@ import com.hosta.Flora.module.AbstractModule;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.api.distmarker.Dist;
@@ -46,28 +47,22 @@ public class RegistryHandler {
 		}
 	}
 
-	private final RegistryBlocks	BLOCKS	= new RegistryBlocks();
-	private final AbstractRegistry	ITEMS	= new AbstractRegistry(){};
-	private final AbstractRegistry	EFFECTS	= new AbstractRegistry(){};
-	private final AbstractRegistry	POTIONS	= new AbstractRegistry(){};
+	private final RegistryBlocks							BLOCKS	= new RegistryBlocks();
+	private final AbstractRegistry<Item>					ITEMS	= new AbstractRegistry<Item>(entry -> entry instanceof Item);
+	private final AbstractRegistry<Effect>					EFFECTS	= new AbstractRegistry<Effect>(entry -> entry instanceof Effect);
+	private final AbstractRegistry<Potion>					POTIONS	= new AbstractRegistry<Potion>(entry -> entry instanceof Potion);
+	private final AbstractRegistry<IRecipeSerializer<?>>	RECIPES	= new AbstractRegistry<IRecipeSerializer<?>>(entry -> entry instanceof IRecipeSerializer<?>);
+
+	private final AbstractRegistry<?>[]	REGISTRIES	= new AbstractRegistry[] { BLOCKS, ITEMS, EFFECTS, POTIONS, RECIPES };
 
 	public <V extends IForgeRegistryEntry<V>> V register(V entry)
 	{
-		if (entry instanceof Block)
+		for (AbstractRegistry<?> registry : REGISTRIES)
 		{
-			BLOCKS.register(entry);
-		}
-		else if (entry instanceof Item)
-		{
-			ITEMS.register(entry);
-		}
-		else if (entry instanceof Effect)
-		{
-			EFFECTS.register(entry);
-		}
-		else if (entry instanceof Potion)
-		{
-			POTIONS.register(entry);
+			if (registry.match(entry))
+			{
+				registry.register(entry);
+			}
 		}
 		return entry;
 	}
@@ -99,6 +94,13 @@ public class RegistryHandler {
 	{
 		MODULES.forEach(module -> module.registerPotions());
 		POTIONS.registerFinal(event.getRegistry());
+	}
+
+	@SubscribeEvent
+	public void registerRecipes(RegistryEvent.Register<IRecipeSerializer<?>> event)
+	{
+		MODULES.forEach(module -> module.registerRecipes());
+		RECIPES.registerFinal(event.getRegistry());
 	}
 
 	@OnlyIn(Dist.CLIENT)

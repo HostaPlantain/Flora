@@ -36,7 +36,9 @@ public abstract class AbstractModule {
 	public void registerItems() { }
 	public void registerEffects() { }
 	public void registerPotions() { }
+	public void registerRecipes() { }
 	@OnlyIn(Dist.CLIENT)
 	public void registerModels() { }
 	public void gatherData(GatherDataEvent event) {}
+
 }
