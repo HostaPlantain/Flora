@@ -8,7 +8,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectType;
 
-public class Helper {
+public class EffectHelper {
 
 	public static void healBadEffect(LivingEntity entity, int reduceTick, boolean reduceAmplifier)
 	{
@@ -40,7 +40,7 @@ public class Helper {
 			if (!flag)
 			{
 				EffectInstance active = entity.getActivePotionEffect(effect.getPotion());
-				flag = Helper.canMerge(effect, active, buffer);
+				flag = EffectHelper.canMerge(effect, active, buffer);
 			}
 			if (flag)
 			{
