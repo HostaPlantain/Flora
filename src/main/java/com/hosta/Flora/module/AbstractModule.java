@@ -7,6 +7,7 @@ import com.hosta.Flora.registry.RegistryHandler;
 import net.minecraft.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public abstract class AbstractModule {
@@ -20,13 +21,6 @@ public abstract class AbstractModule {
 		this.registry = registry;
 	}
 
-	public void registerBlocks() { }
-	public void registerItems() { }
-	public void registerEffects() { }
-	public void registerPotions() { }
-	@OnlyIn(Dist.CLIENT)
-	public void registerModels() { }
-
 	protected Item register(String name)
 	{
 		return this.register(name, new ItemBase(this.mod));
@@ -37,4 +31,12 @@ public abstract class AbstractModule {
 		entry.setRegistryName(this.mod.getResourceLocation(name));
 		return this.registry.register(entry);
 	}
+
+	public void registerBlocks() { }
+	public void registerItems() { }
+	public void registerEffects() { }
+	public void registerPotions() { }
+	@OnlyIn(Dist.CLIENT)
+	public void registerModels() { }
+	public void gatherData(GatherDataEvent event) {}
 }

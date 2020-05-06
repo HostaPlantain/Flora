@@ -15,6 +15,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
@@ -106,5 +107,11 @@ public class RegistryHandler {
 	{
 		MODULES.forEach(module -> module.registerModels());
 		BLOCKS.registerRenders();
+	}
+
+	@SubscribeEvent
+	public void gatherData(GatherDataEvent event)
+	{
+		MODULES.forEach(module -> module.gatherData(event));
 	}
 }

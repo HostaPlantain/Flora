@@ -8,8 +8,8 @@ public interface IRenderType {
 
 	enum Type
 	{
-		SOLID(RenderType.func_228639_c_()),
-		CUTOUT(RenderType.func_228643_e_());
+		SOLID(RenderType.getSolid()),
+		CUTOUT(RenderType.getCutout());
 
 		private RenderType type;
 

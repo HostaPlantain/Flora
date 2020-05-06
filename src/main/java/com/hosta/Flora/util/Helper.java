@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.List;
 
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectType;
 
@@ -33,19 +32,19 @@ public class Helper {
 		}
 	}
 
-	public static boolean mergeEffect(PlayerEntity player, EffectInstance effect, int buffer)
+	public static boolean mergeEffect(LivingEntity entity, EffectInstance effect, int buffer)
 	{
-		boolean flag = !player.isPotionActive(effect.getPotion());
-		if (!player.world.isRemote)
+		boolean flag = !entity.isPotionActive(effect.getPotion());
+		if (!entity.world.isRemote)
 		{
 			if (!flag)
 			{
-				EffectInstance active = player.getActivePotionEffect(effect.getPotion());
+				EffectInstance active = entity.getActivePotionEffect(effect.getPotion());
 				flag = Helper.canMerge(effect, active, buffer);
 			}
 			if (flag)
 			{
-				player.addPotionEffect(effect);
+				entity.addPotionEffect(effect);
 			}
 		}
 		return flag;
