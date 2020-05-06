@@ -14,7 +14,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.IForgeRegistry;
 
-public class RegistryBlocks extends AbstractRegistry<Block> {
+public class RegistryBlocks extends RegistryBase<Block> {
 
 	public RegistryBlocks()
 	{

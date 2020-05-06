@@ -7,12 +7,12 @@ import java.util.function.Predicate;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
-public class AbstractRegistry<T extends IForgeRegistryEntry<T>> {
+public class RegistryBase<T extends IForgeRegistryEntry<T>> {
 
 	protected final List<T> LIST = new ArrayList<T>();
 	private final Predicate<IForgeRegistryEntry<?>> PRE;
 
-	public AbstractRegistry(Predicate<IForgeRegistryEntry<?>> pre)
+	public RegistryBase(Predicate<IForgeRegistryEntry<?>> pre)
 	{
 		this.PRE = pre;
 	}

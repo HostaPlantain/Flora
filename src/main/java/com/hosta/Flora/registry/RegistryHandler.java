@@ -47,17 +47,17 @@ public class RegistryHandler {
 		}
 	}
 
-	private final RegistryBlocks							BLOCKS	= new RegistryBlocks();
-	private final AbstractRegistry<Item>					ITEMS	= new AbstractRegistry<Item>(entry -> entry instanceof Item);
-	private final AbstractRegistry<Effect>					EFFECTS	= new AbstractRegistry<Effect>(entry -> entry instanceof Effect);
-	private final AbstractRegistry<Potion>					POTIONS	= new AbstractRegistry<Potion>(entry -> entry instanceof Potion);
-	private final AbstractRegistry<IRecipeSerializer<?>>	RECIPES	= new AbstractRegistry<IRecipeSerializer<?>>(entry -> entry instanceof IRecipeSerializer<?>);
+	private final RegistryBlocks						BLOCKS	= new RegistryBlocks();
+	private final RegistryBase<Item>					ITEMS	= new RegistryBase<Item>(entry -> entry instanceof Item);
+	private final RegistryBase<Effect>					EFFECTS	= new RegistryBase<Effect>(entry -> entry instanceof Effect);
+	private final RegistryBase<Potion>					POTIONS	= new RegistryBase<Potion>(entry -> entry instanceof Potion);
+	private final RegistryBase<IRecipeSerializer<?>>	RECIPES	= new RegistryBase<IRecipeSerializer<?>>(entry -> entry instanceof IRecipeSerializer<?>);
 
-	private final AbstractRegistry<?>[]	REGISTRIES	= new AbstractRegistry[] { BLOCKS, ITEMS, EFFECTS, POTIONS, RECIPES };
+	private final RegistryBase<?>[]	REGISTRIES	= new RegistryBase[] { BLOCKS, ITEMS, EFFECTS, POTIONS, RECIPES };
 
 	public <V extends IForgeRegistryEntry<V>> V register(V entry)
 	{
-		for (AbstractRegistry<?> registry : REGISTRIES)
+		for (RegistryBase<?> registry : REGISTRIES)
 		{
 			if (registry.match(entry))
 			{
