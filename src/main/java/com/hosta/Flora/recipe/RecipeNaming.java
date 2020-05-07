@@ -21,30 +21,33 @@ public class RecipeNaming extends SpecialRecipeBase {
 	@Override
 	public boolean matches(CraftingInventory inv, World worldIn)
 	{
-		boolean hasName = false;
-		boolean hasColor = false;
-		boolean hasItem = false;
+		byte flag = 0b000;
 		for (int i = 0; i < inv.getSizeInventory(); ++i)
 		{
 			ItemStack itemIn = inv.getStackInSlot(i);
-			if (!hasName && itemIn.getItem() instanceof NameTagItem && itemIn.hasDisplayName())
+			if (!flag(flag, 0b001) && itemIn.getItem() instanceof NameTagItem && itemIn.hasDisplayName())
 			{
-				hasName = true;
+				flag |= 0b001;
 			}
-			else if (!hasColor && itemIn.getItem() instanceof DyeItem)
+			else if (!flag(flag, 0b100) && itemIn.getItem() instanceof DyeItem)
 			{
-				hasColor = true;
+				flag |= 0b100;
 			}
-			else if (!hasItem && !itemIn.isEmpty() && !(itemIn.getItem() instanceof NameTagItem) && !(itemIn.getItem() instanceof DyeItem))
+			else if (!flag(flag, 0b010) && !itemIn.isEmpty() && !(itemIn.getItem() instanceof NameTagItem) && !(itemIn.getItem() instanceof DyeItem))
 			{
-				hasItem = true;
+				flag |= 0b010;
 			}
 			else if (!itemIn.isEmpty())
 			{
 				return false;
 			}
 		}
-		return hasName && hasItem;
+		return flag(flag, 0b011);
+	}
+
+	private static boolean flag(byte flag, int key)
+	{
+		return (flag & key) == key;
 	}
 
 	@Override
@@ -53,11 +56,10 @@ public class RecipeNaming extends SpecialRecipeBase {
 		ITextComponent name = null;
 		ColorHelper color = ColorHelper.WHITE;
 		ItemStack output = ItemStack.EMPTY;
-
 		for (int i = 0; i < inv.getSizeInventory(); ++i)
 		{
 			ItemStack itemIn = inv.getStackInSlot(i);
-			if (itemIn.getItem() instanceof NameTagItem && itemIn.hasDisplayName())
+			if (itemIn.getItem() instanceof NameTagItem)
 			{
 				name = itemIn.getDisplayName();
 			}
@@ -71,14 +73,15 @@ public class RecipeNaming extends SpecialRecipeBase {
 				output.setCount(1);
 			}
 		}
-
-		if (!output.isEmpty() && name != null)
-		{
-			name.getStyle().setItalic(false);
-			name.getStyle().setColor(color.getTextFormatting());
-			output.setDisplayName(name);
-		}
+		setDisplayName(output, name, color);
 		return output;
+	}
+
+	private void setDisplayName(ItemStack output, ITextComponent name, ColorHelper color)
+	{
+		name.getStyle().setItalic(false);
+		name.getStyle().setColor(color.getTextFormatting());
+		output.setDisplayName(name);
 	}
 
 	@Override

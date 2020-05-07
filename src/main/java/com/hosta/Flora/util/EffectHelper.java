@@ -1,7 +1,6 @@
 package com.hosta.Flora.util;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import net.minecraft.entity.LivingEntity;
@@ -12,20 +11,17 @@ public class EffectHelper {
 
 	public static void healBadEffect(LivingEntity entity, int reduceTick, boolean reduceAmplifier)
 	{
-		Collection<EffectInstance> collection = entity.getActivePotionEffects();
 		List<EffectInstance> list = new ArrayList<EffectInstance>();
-
-		for (EffectInstance effectOld : collection)
+		for (EffectInstance effectOld : entity.getActivePotionEffects())
 		{
 			if (effectOld.getPotion().getEffectType() == EffectType.HARMFUL && effectOld.getDuration() > reduceTick)
 			{
-				int amplifier = (reduceAmplifier && effectOld.getAmplifier() != 0) ? effectOld.getAmplifier() - 1 : effectOld.getAmplifier();
+				int amplifier = (reduceAmplifier && effectOld.getAmplifier() > 0) ? effectOld.getAmplifier() - 1 : effectOld.getAmplifier();
 				EffectInstance effectNew = new EffectInstance(effectOld.getPotion(), effectOld.getDuration() - reduceTick, amplifier, effectOld.isAmbient(), effectOld.doesShowParticles());
 				entity.removePotionEffect(effectOld.getPotion());
 				list.add(effectNew);
 			}
 		}
-
 		for (EffectInstance effectNew : list)
 		{
 			entity.addPotionEffect(effectNew);
