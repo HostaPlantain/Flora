@@ -15,5 +15,4 @@ public class ItemBase extends Item {
 	{
 		super(property);
 	}
-
 }

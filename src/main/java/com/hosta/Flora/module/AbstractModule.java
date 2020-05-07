@@ -12,8 +12,8 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public abstract class AbstractModule {
 
-	protected IMod mod;
-	private RegistryHandler registry;
+	protected IMod			mod;
+	private RegistryHandler	registry;
 
 	public void set(IMod mod, RegistryHandler registry)
 	{
@@ -32,13 +32,32 @@ public abstract class AbstractModule {
 		return this.registry.register(entry);
 	}
 
-	public void registerBlocks() { }
-	public void registerItems() { }
-	public void registerEffects() { }
-	public void registerPotions() { }
-	public void registerRecipes() { }
-	@OnlyIn(Dist.CLIENT)
-	public void registerModels() { }
-	public void gatherData(GatherDataEvent event) {}
+	public void registerBlocks()
+	{
+	}
 
+	public void registerItems()
+	{
+	}
+
+	public void registerEffects()
+	{
+	}
+
+	public void registerPotions()
+	{
+	}
+
+	public void registerRecipes()
+	{
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public void registerModels()
+	{
+	}
+
+	public void gatherData(GatherDataEvent event)
+	{
+	}
 }

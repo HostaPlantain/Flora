@@ -9,8 +9,8 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public class RegistryBase<T extends IForgeRegistryEntry<T>> {
 
-	protected final List<T> LIST = new ArrayList<T>();
-	private final Predicate<IForgeRegistryEntry<?>> PRE;
+	protected final List<T>							LIST	= new ArrayList<T>();
+	private final Predicate<IForgeRegistryEntry<?>>	PRE;
 
 	public RegistryBase(Predicate<IForgeRegistryEntry<?>> pre)
 	{

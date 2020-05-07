@@ -17,11 +17,11 @@ import net.minecraftforge.fml.common.Mod;
 @Mod(Flora.ID)
 public class Flora implements IMod {
 
-	public static final String ID = "flora";
-	public static final Logger LOGGER = LogManager.getLogger(Flora.ID);
+	public static final String	ID		= "flora";
+	public static final Logger	LOGGER	= LogManager.getLogger(Flora.ID);
 
-	public static final ConfigClient CONFIG_CLIENT = new ConfigClient();
-	public static final ConfigCommon CONFIG_COMMON = new ConfigCommon();
+	public static final ConfigClient	CONFIG_CLIENT	= new ConfigClient();
+	public static final ConfigCommon	CONFIG_COMMON	= new ConfigCommon();
 
 	public Flora()
 	{

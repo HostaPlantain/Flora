@@ -8,6 +8,7 @@ import net.minecraftforge.fml.common.Mod;
 public interface IMod {
 
 	public ItemGroup getTab();
+
 	public default String getID()
 	{
 		return this.getClass().getAnnotation(Mod.class).value();

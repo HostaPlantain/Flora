@@ -16,5 +16,4 @@ public class ItemBaseColor extends DyeItem {
 	{
 		super(dyeColorIn, builder);
 	}
-
 }

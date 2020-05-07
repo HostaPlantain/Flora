@@ -14,5 +14,4 @@ public class BlockBase extends Block {
 	{
 		super(property);
 	}
-
 }

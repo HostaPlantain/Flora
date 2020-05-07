@@ -16,18 +16,18 @@ public abstract class AbstractConfig {
 	}
 
 	protected abstract AbstractConfig build(ForgeConfigSpec.Builder builder);
-	   
-    public static void registerConfigs(AbstractConfig... configs)
-    {
-    	for (AbstractConfig config : configs)
-    	{
-    		ModLoadingContext.get().registerConfig(config.TYPE, config.getConfigSpec());
-    	}
-    }
-    
-    private <T extends AbstractConfig> ForgeConfigSpec getConfigSpec()
-    {
-    	Pair<Object, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(builder -> this.build(builder));
-    	return specPair.getRight();
-    }
+
+	public static void registerConfigs(AbstractConfig... configs)
+	{
+		for (AbstractConfig config : configs)
+		{
+			ModLoadingContext.get().registerConfig(config.TYPE, config.getConfigSpec());
+		}
+	}
+
+	private <T extends AbstractConfig> ForgeConfigSpec getConfigSpec()
+	{
+		Pair<Object, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(builder -> this.build(builder));
+		return specPair.getRight();
+	}
 }

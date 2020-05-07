@@ -15,7 +15,7 @@ public class EffectBase extends Effect {
 	@Override
 	public void performEffect(LivingEntity entityLivingBaseIn, int amplifier)
 	{
-		
+
 	}
 
 	@Override

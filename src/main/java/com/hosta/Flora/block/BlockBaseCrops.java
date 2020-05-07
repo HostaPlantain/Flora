@@ -41,5 +41,4 @@ public class BlockBaseCrops extends CropsBlock implements IItemName, IRenderType
 	{
 		return IRenderType.Type.CUTOUT;
 	}
-
 }

@@ -24,7 +24,7 @@ public class RegistryHandler {
 
 	private final IMod MOD;
 
-	private final List<AbstractModule>	MODULES	= new ArrayList<AbstractModule>();
+	private final List<AbstractModule> MODULES = new ArrayList<AbstractModule>();
 
 	public RegistryHandler(IMod instance, AbstractModule... modules)
 	{
@@ -53,7 +53,7 @@ public class RegistryHandler {
 	private final RegistryBase<Potion>					POTIONS	= new RegistryBase<Potion>(entry -> entry instanceof Potion);
 	private final RegistryBase<IRecipeSerializer<?>>	RECIPES	= new RegistryBase<IRecipeSerializer<?>>(entry -> entry instanceof IRecipeSerializer<?>);
 
-	private final RegistryBase<?>[]	REGISTRIES	= new RegistryBase[] { BLOCKS, ITEMS, EFFECTS, POTIONS, RECIPES };
+	private final RegistryBase<?>[] REGISTRIES = new RegistryBase[] { BLOCKS, ITEMS, EFFECTS, POTIONS, RECIPES };
 
 	public <V extends IForgeRegistryEntry<V>> V register(V entry)
 	{

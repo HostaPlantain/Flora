@@ -4,7 +4,7 @@ import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.Builder;
 import net.minecraftforge.fml.config.ModConfig;
 
-public class ConfigCommon extends AbstractConfig{
+public class ConfigCommon extends AbstractConfig {
 
 	public ConfigCommon()
 	{
@@ -16,17 +16,11 @@ public class ConfigCommon extends AbstractConfig{
 	@Override
 	protected AbstractConfig build(Builder builder)
 	{
-		builder
-			.comment("Common settings for Flora lib.")
-			.push("common");
-	
-		enableNamingRecipe = builder
-				.comment("Enable naming recipe")
-				.translation("flora.configgui.enableNamingRecipe")
-				.define("enableNamingRecipe", true);
-	
-		builder.pop();
+		builder.comment("Common settings for Flora lib.").push("common");
 
+		enableNamingRecipe = builder.comment("Enable naming recipe").translation("flora.configgui.enableNamingRecipe").define("enableNamingRecipe", true);
+
+		builder.pop();
 		return this;
 	}
 }
