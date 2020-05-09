@@ -1,13 +1,18 @@
 package com.hosta.Flora.util;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectType;
+import net.minecraft.potion.PotionUtils;
 
 public class EffectHelper {
 
@@ -48,16 +53,33 @@ public class EffectHelper {
 		return flag;
 	}
 
+	public static Collection<EffectInstance> getEffects(IInventory inv)
+	{
+		Map<Effect, EffectInstance> map = new HashMap<Effect, EffectInstance>();
+		for (int i = 0; i < inv.getSizeInventory(); ++i)
+		{
+			ItemStack itemIn = inv.getStackInSlot(i);
+			EffectHelper.mergeEffects(map, PotionUtils.getEffectsFromStack(itemIn));
+		}
+		return map.values();
+	}
+
 	public static Map<Effect, EffectInstance> mergeEffects(Map<Effect, EffectInstance> target, List<EffectInstance> source)
 	{
 		for (EffectInstance effectIn : source)
 		{
-			if (!target.containsKey(effectIn.getPotion()) || canMerge(effectIn, target.get(effectIn.getPotion()), 0))
+			Effect potion = effectIn.getPotion();
+			if (!target.containsKey(potion) || canMerge(effectIn, target.get(potion)))
 			{
-				target.put(effectIn.getPotion(), effectIn);
+				target.put(potion, effectIn);
 			}
 		}
 		return target;
+	}
+
+	public static boolean canMerge(EffectInstance EffectNew, EffectInstance EffectOld)
+	{
+		return canMerge(EffectNew, EffectOld, 0);
 	}
 
 	public static boolean canMerge(EffectInstance EffectNew, EffectInstance EffectOld, int buffer)

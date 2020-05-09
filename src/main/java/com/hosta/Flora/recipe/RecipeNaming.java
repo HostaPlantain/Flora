@@ -9,45 +9,28 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.NameTagItem;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
 
 public class RecipeNaming extends SpecialRecipeBase {
 
 	public RecipeNaming(ResourceLocation idIn)
 	{
-		super(idIn);
+		super(idIn, 2, 3);
 	}
 
 	@Override
-	public boolean matches(CraftingInventory inv, World worldIn)
+	protected boolean match(int index, ItemStack itemIn)
 	{
-		byte flag = 0b000;
-		for (int i = 0; i < inv.getSizeInventory(); ++i)
+		switch (index)
 		{
-			ItemStack itemIn = inv.getStackInSlot(i);
-			if (!flag(flag, 0b001) && itemIn.getItem() instanceof NameTagItem && itemIn.hasDisplayName())
-			{
-				flag |= 0b001;
-			}
-			else if (!flag(flag, 0b100) && itemIn.getItem() instanceof DyeItem)
-			{
-				flag |= 0b100;
-			}
-			else if (!flag(flag, 0b010) && !itemIn.isEmpty() && !(itemIn.getItem() instanceof NameTagItem) && !(itemIn.getItem() instanceof DyeItem))
-			{
-				flag |= 0b010;
-			}
-			else if (!itemIn.isEmpty())
-			{
+			case 0:
+				return itemIn.getItem() instanceof NameTagItem && itemIn.hasDisplayName();
+			case 1:
+				return !itemIn.isEmpty() && !(itemIn.getItem() instanceof NameTagItem) && !(itemIn.getItem() instanceof DyeItem);
+			case 2:
+				return itemIn.getItem() instanceof DyeItem;
+			default:
 				return false;
-			}
 		}
-		return flag(flag, 0b011);
-	}
-
-	private static boolean flag(byte flag, int key)
-	{
-		return (flag & key) == key;
 	}
 
 	@Override
@@ -82,11 +65,5 @@ public class RecipeNaming extends SpecialRecipeBase {
 		name.getStyle().setItalic(false);
 		name.getStyle().setColor(color.getTextFormatting());
 		output.setDisplayName(name);
-	}
-
-	@Override
-	public boolean canFit(int width, int height)
-	{
-		return (width * height) >= 2;
 	}
 }

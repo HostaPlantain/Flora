@@ -16,7 +16,7 @@ public interface IMod {
 
 	public default Item.Properties getDefaultProp()
 	{
-		return new Item.Properties().group(getTab());
+		return (new Item.Properties()).group(getTab());
 	}
 
 	public default ResourceLocation getResourceLocation(String name)

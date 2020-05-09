@@ -23,7 +23,12 @@ public abstract class AbstractModule {
 
 	protected Item register(String name)
 	{
-		return this.register(name, new ItemBase(this.mod));
+		return this.register(name, this.mod.getDefaultProp());
+	}
+
+	protected Item register(String name, Item.Properties property)
+	{
+		return this.register(name, new ItemBase(property));
 	}
 
 	protected <V extends IForgeRegistryEntry<V>> V register(String name, V entry)
