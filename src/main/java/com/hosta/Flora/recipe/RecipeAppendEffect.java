@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.hosta.Flora.potion.EffectInstanceBuilder;
@@ -173,9 +174,9 @@ public class RecipeAppendEffect extends SpecialRecipeBase {
 		private static NonNullList<Ingredient> readIngredients(JsonArray array)
 		{
 			NonNullList<Ingredient> nonnulllist = NonNullList.create();
-			for (int i = 0; i < array.size(); ++i)
+			for (JsonElement element : array)
 			{
-				Ingredient ingredient = Ingredient.deserialize(array.get(i));
+				Ingredient ingredient = Ingredient.deserialize(element);
 				if (!ingredient.hasNoMatchingItems())
 				{
 					nonnulllist.add(ingredient);

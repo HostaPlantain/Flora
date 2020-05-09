@@ -20,7 +20,12 @@ public class UtilHelper {
 		return list.toArray(new String[list.size()]);
 	}
 
-	public static String toString(String[] source, String connecter)
+	public static String connect(String[] source)
+	{
+		return connect(source, ";");
+	}
+
+	public static String connect(String[] source, String connecter)
 	{
 		String result = "";
 		for (int i = 0; i < source.length; ++i)
