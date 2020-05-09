@@ -17,7 +17,7 @@ public class ItemBasePotionTooltip extends ItemBase {
 
 	public ItemBasePotionTooltip(IMod mod)
 	{
-		super(mod);
+		this(mod.getDefaultProp().maxStackSize(1));
 	}
 
 	public ItemBasePotionTooltip(Item.Properties property)

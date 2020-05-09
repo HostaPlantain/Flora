@@ -49,11 +49,17 @@ public class RegistryHandler {
 
 	private final RegistryBlocks						BLOCKS	= new RegistryBlocks();
 	private final RegistryBase<Item>					ITEMS	= new RegistryBase<Item>(entry -> entry instanceof Item);
-	private final RegistryBase<Effect>					EFFECTS	= new RegistryBase<Effect>(entry -> entry instanceof Effect);
+	private final RegistryEffects						EFFECTS	= new RegistryEffects();
 	private final RegistryBase<Potion>					POTIONS	= new RegistryBase<Potion>(entry -> entry instanceof Potion);
 	private final RegistryBase<IRecipeSerializer<?>>	RECIPES	= new RegistryBase<IRecipeSerializer<?>>(entry -> entry instanceof IRecipeSerializer<?>);
 
 	private final RegistryBase<?>[] REGISTRIES = new RegistryBase[] { BLOCKS, ITEMS, EFFECTS, POTIONS, RECIPES };
+
+	public <V extends IForgeRegistryEntry<V>> V register(String name, V entry)
+	{
+		entry.setRegistryName(this.MOD.getResourceLocation(name));
+		return register(entry);
+	}
 
 	public <V extends IForgeRegistryEntry<V>> V register(V entry)
 	{
@@ -78,8 +84,8 @@ public class RegistryHandler {
 	public void registerItems(RegistryEvent.Register<Item> event)
 	{
 		MODULES.forEach(module -> module.registerItems());
+		BLOCKS.registerItems(this, MOD);
 		ITEMS.registerFinal(event.getRegistry());
-		BLOCKS.registerItems(event.getRegistry(), MOD);
 	}
 
 	@SubscribeEvent
@@ -93,13 +99,14 @@ public class RegistryHandler {
 	public void registerPotions(RegistryEvent.Register<Potion> event)
 	{
 		MODULES.forEach(module -> module.registerPotions());
+		EFFECTS.registerPotions(this);
 		POTIONS.registerFinal(event.getRegistry());
 	}
 
 	@SubscribeEvent
 	public void registerRecipes(RegistryEvent.Register<IRecipeSerializer<?>> event)
 	{
-		MODULES.forEach(module -> module.registerRecipes());
+		MODULES.forEach(module -> module.registerRecipeAll(POTIONS.values()));
 		RECIPES.registerFinal(event.getRegistry());
 	}
 

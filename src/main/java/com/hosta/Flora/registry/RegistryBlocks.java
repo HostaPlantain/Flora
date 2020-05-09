@@ -8,11 +8,8 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.BlockNamedItem;
-import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.registries.IForgeRegistry;
 
 public class RegistryBlocks extends RegistryBase<Block> {
 
@@ -21,21 +18,18 @@ public class RegistryBlocks extends RegistryBase<Block> {
 		super(entry -> entry instanceof Block);
 	}
 
-	public void registerItems(IForgeRegistry<Item> registry, IMod mod)
+	public void registerItems(RegistryHandler registryHandler, IMod mod)
 	{
 		for (Block block : LIST)
 		{
-			Item item;
 			if (block instanceof IItemName)
 			{
-				ResourceLocation name = mod.getResourceLocation(((IItemName) block).getItemName());
-				item = new BlockNamedItem((Block) block, mod.getDefaultProp()).setRegistryName(name);
+				registryHandler.register((((IItemName) block).getItemName()), new BlockNamedItem((Block) block, mod.getDefaultProp()));
 			}
 			else
 			{
-				item = new BlockItem((Block) block, mod.getDefaultProp()).setRegistryName(block.getRegistryName());
+				registryHandler.register((block.getRegistryName().getPath()), new BlockItem((Block) block, mod.getDefaultProp()));
 			}
-			this.registerNamed(registry, item);
 		}
 	}
 

@@ -30,11 +30,11 @@ public class RegistryBase<T extends IForgeRegistryEntry<T>> {
 
 	public void registerFinal(IForgeRegistry<T> registry)
 	{
-		LIST.forEach(entry -> registerNamed(registry, entry));
+		LIST.forEach(entry -> registry.register(entry));
 	}
 
-	<V extends IForgeRegistryEntry<V>> void registerNamed(IForgeRegistry<V> registry, V entry)
+	public List<T> values()
 	{
-		registry.register(entry);
+		return new ArrayList<T>(LIST);
 	}
 }
