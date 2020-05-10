@@ -3,6 +3,7 @@
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/m/HostaPlantain/Flora?label=Commit%20Activity&logo=github&style=flat)](https://github.com/HostaPlantain/Flora)
 [![GitHub last commit](https://img.shields.io/github/last-commit/HostaPlantain/Flora?label=Last%20Commit&logo=github&style=flat)](https://github.com/HostaPlantain/Flora)
 [![GitHub issues](https://img.shields.io/github/issues/HostaPlantain/Flora?label=Issues&logo=github&style=flat)](https://github.com/HostaPlantain/Flora/issues)
+[![GitHub All Releases](https://img.shields.io/github/downloads/HostaPlantain/Flora/total?label=Beta%20Downloads&logo=github)](https://github.com/HostaPlantain/Flora/releases)
 [![Maintainability](https://api.codeclimate.com/v1/badges/0c1f44d15b41d74a3e35/maintainability?style=flat)](https://codeclimate.com/github/HostaPlantain/Flora/maintainability)
 [![GitHub top language](https://img.shields.io/github/languages/top/HostaPlantain/Flora?logo=java&style=flat)](https://github.com/HostaPlantain/Flora)
 [![GitHub](https://img.shields.io/github/license/HostaPlantain/Flora?label=License&style=flat)](https://github.com/HostaPlantain/Flora/blob/master/LICENSE)

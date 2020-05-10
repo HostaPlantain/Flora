@@ -84,6 +84,10 @@ public abstract class AbstractModule {
 	{
 	}
 
+	public void registerLootModifiers()
+	{
+	}
+
 	@OnlyIn(Dist.CLIENT)
 	public void registerModels()
 	{

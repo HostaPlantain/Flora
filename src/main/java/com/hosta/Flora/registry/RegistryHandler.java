@@ -3,6 +3,7 @@ package com.hosta.Flora.registry;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.hosta.Flora.Flora;
 import com.hosta.Flora.IMod;
 import com.hosta.Flora.module.AbstractModule;
 
@@ -14,6 +15,7 @@ import net.minecraft.potion.Potion;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
@@ -53,7 +55,9 @@ public class RegistryHandler {
 	private final RegistryBase<Potion>					POTIONS	= new RegistryBase<Potion>(entry -> entry instanceof Potion);
 	private final RegistryBase<IRecipeSerializer<?>>	RECIPES	= new RegistryBase<IRecipeSerializer<?>>(entry -> entry instanceof IRecipeSerializer<?>);
 
-	private final RegistryBase<?>[] REGISTRIES = new RegistryBase[] { BLOCKS, ITEMS, EFFECTS, POTIONS, RECIPES };
+	private final RegistryBase<GlobalLootModifierSerializer<?>> LOOT_MODIFIER = new RegistryBase<GlobalLootModifierSerializer<?>>(entry -> entry instanceof GlobalLootModifierSerializer<?>);
+
+	private final RegistryBase<?>[] REGISTRIES = new RegistryBase[] { BLOCKS, ITEMS, EFFECTS, POTIONS, RECIPES, LOOT_MODIFIER };
 
 	public <V extends IForgeRegistryEntry<V>> V register(String name, V entry)
 	{
@@ -68,9 +72,11 @@ public class RegistryHandler {
 			if (registry.match(entry))
 			{
 				registry.register(entry);
+				return entry;
 			}
 		}
-		return entry;
+		Flora.LOGGER.debug(String.format("%s matchs with nothing!", entry.getRegistryName().toString()), entry);
+		return null;
 	}
 
 	@SubscribeEvent
@@ -108,6 +114,13 @@ public class RegistryHandler {
 	{
 		MODULES.forEach(module -> module.registerRecipeAll(POTIONS.values()));
 		RECIPES.registerFinal(event.getRegistry());
+	}
+
+	@SubscribeEvent
+	public void registerLootModifiers(RegistryEvent.Register<GlobalLootModifierSerializer<?>> event)
+	{
+		MODULES.forEach(module -> module.registerLootModifiers());
+		LOOT_MODIFIER.registerFinal(event.getRegistry());
 	}
 
 	@OnlyIn(Dist.CLIENT)
