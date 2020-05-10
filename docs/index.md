@@ -7,7 +7,6 @@
 
 
 Flora is a library for Hosta's mods!
-![Coming Soon](https://img.shields.io/badge/-Coming_Soon-181717?style=flat)
 
 
 ## Caution

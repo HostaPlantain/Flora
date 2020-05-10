@@ -8,12 +8,6 @@
 [![GitHub](https://img.shields.io/github/license/HostaPlantain/Flora?label=License&style=flat)](https://github.com/HostaPlantain/Flora/blob/master/LICENSE)
 
 Flora is a library for Hosta's mods!
-![Coming Soon](https://img.shields.io/badge/-Coming_Soon-181717?style=flat)
-
-
-## Caution
-
-This mod is still work in progress. When you find a bug, report [here](https://github.com/HostaPlantain/Flora/issues/new) please.
 
 
 ## Optional Dependencies
