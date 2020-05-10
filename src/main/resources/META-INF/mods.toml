@@ -19,3 +19,11 @@ authors="Hosta_Plantain" #optional
 description='''
 Inside the Secret World of Plants
 '''
+
+
+[[dependencies.flora]]
+    modId="forge"
+    mandatory=true
+    versionRange="[31.1.74,)"
+    ordering="NONE"
+    side="BOTH"
