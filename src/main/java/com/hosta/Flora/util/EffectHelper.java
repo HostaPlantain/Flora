@@ -90,7 +90,7 @@ public class EffectHelper {
 		}
 		else if (EffectNew.getAmplifier() == EffectOld.getAmplifier())
 		{
-			return EffectNew.getDuration() > EffectOld.getDuration() + buffer;
+			return EffectNew.getDuration() >= EffectOld.getDuration() + buffer;
 		}
 		else
 		{

@@ -1,4 +1,4 @@
-![](src/main/resources/logo.png)
+![](../src/main/resources/logo.png)
 
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/m/HostaPlantain/Flora?label=Commit%20Activity&logo=github&style=flat)](https://github.com/HostaPlantain/Flora)
 [![GitHub last commit](https://img.shields.io/github/last-commit/HostaPlantain/Flora?label=Last%20Commit&logo=github&style=flat)](https://github.com/HostaPlantain/Flora)

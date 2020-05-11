@@ -6,14 +6,16 @@ import com.hosta.Flora.IMod;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionUtils;
+import net.minecraft.potion.Potion;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class ItemBasePotionTooltip extends ItemBase {
+public class ItemBasePotionTooltip extends ItemBase implements IhasPotionList {
 
 	public ItemBasePotionTooltip(IMod mod)
 	{
@@ -25,11 +27,26 @@ public class ItemBasePotionTooltip extends ItemBase {
 		super(property);
 	}
 
+	@Override
+	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items)
+	{
+		if (this.isInGroup(group))
+		{
+			this.addToGroup(items, this);
+		}
+	}
+
+	@Override
+	public Potion[] getPotionList()
+	{
+		return null;
+	}
+
 	@OnlyIn(Dist.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
 	{
-		PotionUtils.addPotionTooltip(stack, tooltip, 1.0F);
+		addPotionInformation(stack, tooltip);
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 }

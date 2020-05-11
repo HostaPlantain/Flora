@@ -5,9 +5,11 @@ import java.util.List;
 
 import com.hosta.Flora.IMod;
 import com.hosta.Flora.item.ItemBase;
+import com.hosta.Flora.potion.PotionBase;
 import com.hosta.Flora.registry.RegistryHandler;
 
 import net.minecraft.item.Item;
+import net.minecraft.potion.Effect;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -54,8 +56,12 @@ public abstract class AbstractModule {
 	{
 	}
 
-	public void registerPotions()
+	public void registerPotions(List<Effect> list)
 	{
+		for (Effect effct : list)
+		{
+			register(effct.getRegistryName().getPath(), new PotionBase(effct));
+		}
 	}
 
 	private final List<IBrewingRecipe> BREWINGS = new ArrayList<IBrewingRecipe>();

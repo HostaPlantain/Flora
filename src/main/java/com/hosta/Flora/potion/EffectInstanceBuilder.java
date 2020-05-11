@@ -7,6 +7,8 @@ import net.minecraft.potion.EffectInstance;
 
 public class EffectInstanceBuilder {
 
+	public static final int S20 = 415;
+
 	public Effect	effect;
 	public int		duration	= 1;
 	public int		amplifier	= 0;
@@ -50,7 +52,7 @@ public class EffectInstanceBuilder {
 		switch (CODE[i])
 		{
 			case "duration20s":
-				this.duration = 415;
+				this.duration = S20;
 				break;
 			case "amplifier0":
 				this.amplifier = 0;
@@ -64,9 +66,13 @@ public class EffectInstanceBuilder {
 		}
 	}
 
+	public static EffectInstance passiveOf(Effect effect)
+	{
+		return new EffectInstance(effect, S20, 0, false, false);
+	}
+
 	public static EffectInstance form(EffectInstance effectIn, short flag)
 	{
-		System.out.println(flag);
 		if (flag == 0)
 		{
 			return effectIn;

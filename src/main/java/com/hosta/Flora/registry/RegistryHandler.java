@@ -51,7 +51,7 @@ public class RegistryHandler {
 
 	private final RegistryBlocks						BLOCKS	= new RegistryBlocks();
 	private final RegistryBase<Item>					ITEMS	= new RegistryBase<Item>(entry -> entry instanceof Item);
-	private final RegistryEffects						EFFECTS	= new RegistryEffects();
+	private final RegistryBase<Effect>					EFFECTS	= new RegistryBase<Effect>(entry -> entry instanceof Effect);
 	private final RegistryBase<Potion>					POTIONS	= new RegistryBase<Potion>(entry -> entry instanceof Potion);
 	private final RegistryBase<IRecipeSerializer<?>>	RECIPES	= new RegistryBase<IRecipeSerializer<?>>(entry -> entry instanceof IRecipeSerializer<?>);
 
@@ -104,8 +104,7 @@ public class RegistryHandler {
 	@SubscribeEvent
 	public void registerPotions(RegistryEvent.Register<Potion> event)
 	{
-		MODULES.forEach(module -> module.registerPotions());
-		EFFECTS.registerPotions(this);
+		MODULES.forEach(module -> module.registerPotions(EFFECTS.LIST));
 		POTIONS.registerFinal(event.getRegistry());
 	}
 
