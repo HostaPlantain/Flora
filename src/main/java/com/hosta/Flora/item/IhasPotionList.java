@@ -16,6 +16,7 @@ public interface IhasPotionList {
 	public default void addToGroup(NonNullList<ItemStack> items, Item item)
 	{
 		if (getPotionList() != null)
+		{
 			for (Potion potion : getPotionList())
 			{
 				items.add(PotionUtils.addPotionToItemStack(new ItemStack(item), potion));
