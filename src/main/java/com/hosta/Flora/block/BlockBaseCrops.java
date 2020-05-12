@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.CropsBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.util.IItemProvider;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -37,8 +38,8 @@ public class BlockBaseCrops extends CropsBlock implements IItemName, IRenderType
 
 	@OnlyIn(Dist.CLIENT)
 	@Override
-	public IRenderType.Type getType()
+	public RenderType getRenderType()
 	{
-		return IRenderType.Type.CUTOUT;
+		return RenderType.getCutout();
 	}
 }

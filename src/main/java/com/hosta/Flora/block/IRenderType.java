@@ -1,26 +1,11 @@
 package com.hosta.Flora.block;
 
 import net.minecraft.client.renderer.RenderType;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public interface IRenderType {
 
-	public IRenderType.Type getType();
-
-	enum Type
-	{
-		SOLID(RenderType.getSolid()),
-		CUTOUT(RenderType.getCutout());
-
-		private RenderType type;
-
-		private Type(RenderType field)
-		{
-			this.type = field;
-		}
-
-		public RenderType getRenderType()
-		{
-			return type;
-		}
-	};
+	@OnlyIn(Dist.CLIENT)
+	public RenderType getRenderType();
 }

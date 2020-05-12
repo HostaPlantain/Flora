@@ -12,6 +12,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.Potion;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -49,15 +50,16 @@ public class RegistryHandler {
 		}
 	}
 
-	private final RegistryBlocks						BLOCKS	= new RegistryBlocks();
-	private final RegistryBase<Item>					ITEMS	= new RegistryBase<Item>(entry -> entry instanceof Item);
-	private final RegistryBase<Effect>					EFFECTS	= new RegistryBase<Effect>(entry -> entry instanceof Effect);
-	private final RegistryBase<Potion>					POTIONS	= new RegistryBase<Potion>(entry -> entry instanceof Potion);
-	private final RegistryBase<IRecipeSerializer<?>>	RECIPES	= new RegistryBase<IRecipeSerializer<?>>(entry -> entry instanceof IRecipeSerializer<?>);
+	private final RegistryBlocks						BLOCKS			= new RegistryBlocks();
+	private final RegistryBase<TileEntityType<?>>		TILE_ENTITIES	= new RegistryBase<TileEntityType<?>>(entry -> entry instanceof TileEntityType<?>);
+	private final RegistryBase<Item>					ITEMS			= new RegistryBase<Item>(entry -> entry instanceof Item);
+	private final RegistryBase<Effect>					EFFECTS			= new RegistryBase<Effect>(entry -> entry instanceof Effect);
+	private final RegistryBase<Potion>					POTIONS			= new RegistryBase<Potion>(entry -> entry instanceof Potion);
+	private final RegistryBase<IRecipeSerializer<?>>	RECIPES			= new RegistryBase<IRecipeSerializer<?>>(entry -> entry instanceof IRecipeSerializer<?>);
 
 	private final RegistryBase<GlobalLootModifierSerializer<?>> LOOT_MODIFIER = new RegistryBase<GlobalLootModifierSerializer<?>>(entry -> entry instanceof GlobalLootModifierSerializer<?>);
 
-	private final RegistryBase<?>[] REGISTRIES = new RegistryBase[] { BLOCKS, ITEMS, EFFECTS, POTIONS, RECIPES, LOOT_MODIFIER };
+	private final RegistryBase<?>[] REGISTRIES = new RegistryBase[] { BLOCKS, ITEMS, TILE_ENTITIES, EFFECTS, POTIONS, RECIPES, LOOT_MODIFIER };
 
 	public <V extends IForgeRegistryEntry<V>> V register(String name, V entry)
 	{
@@ -84,6 +86,13 @@ public class RegistryHandler {
 	{
 		MODULES.forEach(module -> module.registerBlocks());
 		BLOCKS.registerFinal(event.getRegistry());
+	}
+
+	@SubscribeEvent
+	public void registerTileEntities(RegistryEvent.Register<TileEntityType<?>> event)
+	{
+		MODULES.forEach(module -> module.registerTileEntities());
+		TILE_ENTITIES.registerFinal(event.getRegistry());
 	}
 
 	@SubscribeEvent

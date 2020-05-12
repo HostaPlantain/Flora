@@ -48,6 +48,10 @@ public abstract class AbstractModule {
 	{
 	}
 
+	public void registerTileEntities()
+	{
+	}
+
 	public void registerItems()
 	{
 	}
