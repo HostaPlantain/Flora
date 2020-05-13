@@ -29,9 +29,12 @@ public abstract class AbstractModule {
 		this.registry = registry;
 	}
 
-	protected Item register(String name)
+	protected void registerItems(String... items)
 	{
-		return this.register(name, this.mod.getDefaultProp());
+		for (String name : items)
+		{
+			this.register(name, this.mod.getDefaultProp());
+		}
 	}
 
 	protected Item register(String name, Item.Properties property)
