@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.item.crafting.ShapedRecipe;
 import net.minecraft.item.crafting.SingleItemRecipe;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
@@ -52,9 +53,7 @@ public abstract class SingleItemRecipeBase extends SingleItemRecipe {
 				ingredient = Ingredient.deserialize(JSONUtils.getJsonObject(json, "ingredient"));
 			}
 
-			String s1 = JSONUtils.getString(json, "result");
-			int i = JSONUtils.getInt(json, "count");
-			ItemStack itemstack = new ItemStack(Registry.ITEM.getOrDefault(new ResourceLocation(s1)), i);
+			ItemStack itemstack = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "result"));
 			return this.factory.create(recipeId, s, ingredient, itemstack);
 		}
 

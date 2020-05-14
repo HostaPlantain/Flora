@@ -9,7 +9,6 @@ import com.hosta.Flora.tileentity.TileEntityInventory;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -23,14 +22,9 @@ public class BlockEntityHorizontal extends BlockBaseHorizontal implements ITileE
 
 	private final Supplier<TileEntity> SUPPLIER;
 
-	public BlockEntityHorizontal(Material materialIn, Supplier<TileEntity> supplier)
-	{
-		this(Block.Properties.create(materialIn), supplier);
-	}
-
 	public BlockEntityHorizontal(Block.Properties property, Supplier<TileEntity> supplier)
 	{
-		super(property.doesNotBlockMovement());
+		super(property);
 		this.SUPPLIER = supplier;
 	}
 

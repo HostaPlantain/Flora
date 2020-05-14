@@ -2,7 +2,6 @@ package com.hosta.Flora.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer.Builder;
@@ -14,11 +13,6 @@ import net.minecraft.util.Rotation;
 public class BlockBaseHorizontal extends BlockBase {
 
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-
-	public BlockBaseHorizontal(Material materialIn)
-	{
-		this(Block.Properties.create(materialIn));
-	}
 
 	public BlockBaseHorizontal(Block.Properties property)
 	{
