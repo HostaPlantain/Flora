@@ -13,15 +13,19 @@ import net.minecraft.potion.Effect;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.common.brewing.IBrewingRecipe;
-import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public abstract class AbstractModule {
 
 	protected IMod			mod;
 	private RegistryHandler	registry;
+
+	public void preInit()
+	{
+	}
 
 	public void set(IMod mod, RegistryHandler registry)
 	{
@@ -106,7 +110,8 @@ public abstract class AbstractModule {
 	{
 	}
 
-	public void gatherData(GatherDataEvent event)
+	protected void registerEventHandler(Object handler)
 	{
+		MinecraftForge.EVENT_BUS.register(handler);
 	}
 }

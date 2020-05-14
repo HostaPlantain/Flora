@@ -13,7 +13,7 @@ import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 
 public class LootModifierSingle extends LootModifierBase {
 
-	private final ItemStack	ITEMSTACK;
+	private final ItemStack ITEMSTACK;
 
 	protected LootModifierSingle(ILootCondition[] conditionsIn, ItemStack itemstack)
 	{
@@ -29,10 +29,6 @@ public class LootModifierSingle extends LootModifierBase {
 	}
 
 	public static class Serializer extends GlobalLootModifierSerializer<LootModifierSingle> {
-
-		public Serializer()
-		{
-		}
 
 		@Override
 		public LootModifierSingle read(ResourceLocation name, JsonObject object, ILootCondition[] conditionsIn)

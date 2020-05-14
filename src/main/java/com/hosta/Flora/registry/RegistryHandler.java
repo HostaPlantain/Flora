@@ -19,7 +19,6 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
@@ -46,6 +45,7 @@ public class RegistryHandler {
 		for (AbstractModule module : modules)
 		{
 			module.set(this.MOD, this);
+			module.preInit();
 			MODULES.add(module);
 		}
 	}
@@ -137,11 +137,5 @@ public class RegistryHandler {
 	{
 		MODULES.forEach(module -> module.registerModels());
 		BLOCKS.registerRenders();
-	}
-
-	@SubscribeEvent
-	public void gatherData(GatherDataEvent event)
-	{
-		MODULES.forEach(module -> module.gatherData(event));
 	}
 }

@@ -41,9 +41,8 @@ public class TileEntityInventory extends TileEntityBase implements ISidedInvento
 
 	public CompoundNBT write(CompoundNBT compound)
 	{
-		super.write(compound);
-		ItemStackHelper.saveAllItems(compound, this.items);
-		return compound;
+		compound = super.write(compound);
+		return ItemStackHelper.saveAllItems(compound, this.items);
 	}
 
 	@Override
@@ -92,11 +91,11 @@ public class TileEntityInventory extends TileEntityBase implements ISidedInvento
 	@Override
 	public void setInventorySlotContents(int index, ItemStack stack)
 	{
-		this.items.set(index, stack);
 		if (stack.getCount() > this.getInventoryStackLimit())
 		{
 			stack.setCount(this.getInventoryStackLimit());
 		}
+		this.items.set(index, stack);
 		this.markDirty();
 	}
 

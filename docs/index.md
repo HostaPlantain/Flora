@@ -7,6 +7,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/0c1f44d15b41d74a3e35/maintainability?style=flat)](https://codeclimate.com/github/HostaPlantain/Flora/maintainability)
 [![GitHub top language](https://img.shields.io/github/languages/top/HostaPlantain/Flora?logo=java&style=flat)](https://github.com/HostaPlantain/Flora)
 [![GitHub](https://img.shields.io/github/license/HostaPlantain/Flora?label=License&style=flat)](https://github.com/HostaPlantain/Flora/blob/master/LICENSE)
+[![Discord](https://img.shields.io/discord/704290681392332880?label=Discord&logo=discord)](https://discord.gg/H2NXexh)
 
 
 Flora is a library for Hosta's mods!
@@ -38,4 +39,3 @@ This mod is released under [the MIT License](/LICENSE).
 Hosta_Plantain
 [![Twitter](https://img.shields.io/twitter/follow/Hosta_Plantain?color=1DA1F2&label=Twitter&logo=twitter&style=flat)](https://twitter.com/hosta_plantain)
 [![GitHub](https://img.shields.io/github/followers/HostaPlantain?label=GitHub&logo=github&style=flat)](https://github.com/HostaPlantain)
-[![Discord](https://img.shields.io/discord/704290681392332880?label=Discord&logo=discord)](https://discord.gg/H2NXexh)
