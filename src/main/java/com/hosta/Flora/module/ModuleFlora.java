@@ -13,7 +13,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 public class ModuleFlora extends Module {
 
 	@Override
-	public void preInit(FMLCommonSetupEvent event)
+	public void setup(FMLCommonSetupEvent event)
 	{
 		registerEventHandler(new EventHandlerFlora());
 	}

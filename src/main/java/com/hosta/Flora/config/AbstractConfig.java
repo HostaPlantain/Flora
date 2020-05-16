@@ -8,6 +8,7 @@ import net.minecraftforge.fml.config.ModConfig;
 
 public abstract class AbstractConfig {
 
+	public ForgeConfigSpec spec;
 	private final ModConfig.Type TYPE;
 
 	public AbstractConfig(ModConfig.Type type)
@@ -28,6 +29,7 @@ public abstract class AbstractConfig {
 	private <T extends AbstractConfig> ForgeConfigSpec getConfigSpec()
 	{
 		Pair<Object, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(builder -> this.build(builder));
-		return specPair.getRight();
+		spec = specPair.getRight();
+		return spec;
 	}
 }

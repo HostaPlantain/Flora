@@ -35,7 +35,7 @@ public abstract class Module {
 		return ModList.get().isLoaded(modName);
 	}
 
-	public void preInit(FMLCommonSetupEvent event)
+	public void setup(FMLCommonSetupEvent event)
 	{
 	}
 

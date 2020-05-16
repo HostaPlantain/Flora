@@ -22,8 +22,11 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.config.ConfigTracker;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public class RegistryHandler {
@@ -35,7 +38,7 @@ public class RegistryHandler {
 		REGISTRY_HANDLERS.add(new RegistryHandler(mod));
 	}
 
-	private final IMod					MOD;
+	private final IMod			MOD;
 	private final List<Module>	MODULES	= new ArrayList<Module>();
 
 	public RegistryHandler(IMod instance)
@@ -47,6 +50,8 @@ public class RegistryHandler {
 	@SubscribeEvent
 	public void preLoadModules(RegistryEvent.NewRegistry event)
 	{
+		ConfigTracker.INSTANCE.loadConfigs(ModConfig.Type.COMMON, FMLPaths.CONFIGDIR.get());
+		Flora.LOGGER.debug(Flora.CONFIG_COMMON.spec.isLoaded());
 		for (Pair<String, Supplier<Module>> pair : MOD.getModuleList())
 		{
 			Module module = getModule(pair.getFirst(), pair.getSecond());
@@ -169,7 +174,7 @@ public class RegistryHandler {
 	{
 		for (Module module : MODULES)
 		{
-			module.preInit(event);
+			module.setup(event);
 		}
 	}
 }
