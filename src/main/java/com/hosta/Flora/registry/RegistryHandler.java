@@ -51,7 +51,6 @@ public class RegistryHandler {
 	public void preLoadModules(RegistryEvent.NewRegistry event)
 	{
 		ConfigTracker.INSTANCE.loadConfigs(ModConfig.Type.COMMON, FMLPaths.CONFIGDIR.get());
-		Flora.LOGGER.debug(Flora.CONFIG_COMMON.spec.isLoaded());
 		for (Pair<String, Supplier<Module>> pair : MOD.getModuleList())
 		{
 			Module module = getModule(pair.getFirst(), pair.getSecond());
