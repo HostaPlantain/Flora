@@ -11,7 +11,7 @@
 
 
 Flora is a library for Hosta's mods!
-Leatest [**beta release**](https://github.com/HostaPlantain/Flora/releases/tag/0.0.1.13) is now available.
+Leatest [**beta release**](https://github.com/HostaPlantain/Flora/releases/latest) is now available.
 
 
 ## Caution
