@@ -2,6 +2,7 @@ package com.hosta.Flora.tileentity;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
@@ -9,9 +10,16 @@ import net.minecraft.tileentity.TileEntityType;
 
 public class TileEntityBaseInventoryWithRender extends TileEntityBaseInventory {
 
+	private CompoundNBT lastNBT = null;
+
 	public TileEntityBaseInventoryWithRender(TileEntityType<?> tileEntityTypeIn, int size)
 	{
 		super(tileEntityTypeIn, size);
+	}
+
+	public TileEntityBaseInventoryWithRender(TileEntityType<?> tileEntityTypeIn, int size, Ingredient ingredient)
+	{
+		super(tileEntityTypeIn, size, ingredient);
 	}
 
 	@Override
@@ -37,7 +45,12 @@ public class TileEntityBaseInventoryWithRender extends TileEntityBaseInventory {
 	public void markDirty()
 	{
 		super.markDirty();
-		sendPacket();
+		CompoundNBT nbt = getUpdateTag();
+		if (lastNBT != nbt)
+		{
+			sendPacket();
+			lastNBT = nbt;
+		}
 	}
 
 	private void sendPacket()

@@ -15,7 +15,7 @@ import net.minecraftforge.client.model.generators.ModelBuilder;
 
 public abstract class TileEntityBaseRenderer<T extends TileEntity> extends TileEntityRenderer<T> {
 
-	private static final ItemRenderer RENDER = Minecraft.getInstance().getItemRenderer();
+	protected static final ItemRenderer ITEM_RENDER = Minecraft.getInstance().getItemRenderer();
 
 	public TileEntityBaseRenderer(TileEntityRendererDispatcher rendererDispatcherIn)
 	{
@@ -30,7 +30,7 @@ public abstract class TileEntityBaseRenderer<T extends TileEntity> extends TileE
 		matrixStackIn.rotate(Vector3f.ZP.rotationDegrees(rotate[2]));
 		matrixStackIn.rotate(Vector3f.XP.rotationDegrees(rotate[0]));
 		matrixStackIn.scale(scale, scale, scale);
-		RENDER.renderItem(itemstack, ModelBuilder.Perspective.FIXED.vanillaType, combinedLightIn, OverlayTexture.NO_OVERLAY, matrixStackIn, bufferIn);
+		ITEM_RENDER.renderItem(itemstack, ModelBuilder.Perspective.FIXED.vanillaType, combinedLightIn, OverlayTexture.NO_OVERLAY, matrixStackIn, bufferIn);
 		matrixStackIn.pop();
 	}
 }

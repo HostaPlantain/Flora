@@ -6,6 +6,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
@@ -15,12 +16,18 @@ import net.minecraftforge.items.ItemHandlerHelper;
 
 public class TileEntityBaseInventory extends TileEntityBase implements ISidedInventory {
 
+	protected final int					SIZE;
 	private final int[]					DEFAULT_SLOTS;
 	protected NonNullList<ItemStack>	items;
-	protected final int					SIZE;
+	private final Ingredient			IN;
 	private int							limit	= 64;
 
 	public TileEntityBaseInventory(TileEntityType<?> tileEntityTypeIn, int size)
+	{
+		this(tileEntityTypeIn, size, null);
+	}
+
+	public TileEntityBaseInventory(TileEntityType<?> tileEntityTypeIn, int size, Ingredient ingredient)
 	{
 		super(tileEntityTypeIn);
 		this.SIZE = size;
@@ -30,6 +37,7 @@ public class TileEntityBaseInventory extends TileEntityBase implements ISidedInv
 			DEFAULT_SLOTS[i] = i;
 		}
 		this.items = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
+		this.IN = ingredient;
 	}
 
 	public void read(CompoundNBT compound)
@@ -115,7 +123,7 @@ public class TileEntityBaseInventory extends TileEntityBase implements ISidedInv
 	public boolean canInsertItem(int index, ItemStack itemStackIn, Direction direction)
 	{
 		ItemStack stack = items.get(index);
-		return stack.isEmpty() || stack.getCount() + itemStackIn.getCount() <= getInventoryStackLimit();
+		return isWhiteListed(itemStackIn) && (stack.isEmpty() || stack.getCount() + itemStackIn.getCount() <= getInventoryStackLimit());
 	}
 
 	@Override
@@ -138,11 +146,11 @@ public class TileEntityBaseInventory extends TileEntityBase implements ISidedInv
 	public void putHoldItemIn(PlayerEntity player, Hand handIn, int index)
 	{
 		ItemStack stack = player.getHeldItem(handIn);
-		if (!stack.isEmpty() && isEmpty())
+		if (!stack.isEmpty() && isWhiteListed(stack) && getStackInSlot(index).isEmpty())
 		{
 			putItemIn(player, handIn, stack, index);
 		}
-		else if (!isEmpty())
+		else if (!getStackInSlot(index).isEmpty())
 		{
 			ItemStack invItem = getStackInSlot(index);
 			putItemIn(player, handIn, stack, index);
@@ -153,12 +161,22 @@ public class TileEntityBaseInventory extends TileEntityBase implements ISidedInv
 	private void putItemIn(PlayerEntity player, Hand handIn, ItemStack stackIn, int index)
 	{
 		ItemStack stackReturn = ItemStack.EMPTY;
-		if (stackIn.getCount() > getInventoryStackLimit())
+		if (!isWhiteListed(stackIn))
+		{
+			stackReturn = stackIn;
+			stackIn = ItemStack.EMPTY;
+		}
+		else if (stackIn.getCount() > getInventoryStackLimit())
 		{
 			stackReturn = stackIn.split(stackIn.getCount() - getInventoryStackLimit());
 		}
 		setInventorySlotContents(index, stackIn);
 		player.setHeldItem(handIn, stackReturn);
+	}
+
+	public boolean isWhiteListed(ItemStack stack)
+	{
+		return this.IN == null || this.IN.test(stack);
 	}
 
 	public Collection<ItemStack> getDrops()
