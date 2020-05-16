@@ -8,7 +8,7 @@ issueTrackerURL="https://github.com/HostaPlantain/Flora" #optional
 [[mods]]
 
 modId="flora"
-version="0.0.2"
+version="0.0.3"
 displayName="Flora Libs"
 
 displayURL="https://github.com/HostaPlantain/Flora" #optional
@@ -24,6 +24,6 @@ Inside the Secret World of Plants
 [[dependencies.flora]]
     modId="forge"
     mandatory=true
-    versionRange="[31.1.74,)"
+    versionRange="[31.2.0,)"
     ordering="NONE"
     side="BOTH"
