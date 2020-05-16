@@ -47,7 +47,7 @@ public class EffectHelper {
 			}
 			if (flag)
 			{
-				entity.addPotionEffect(effect);
+				entity.addPotionEffect(new EffectInstance(effect));
 			}
 		}
 		return flag;

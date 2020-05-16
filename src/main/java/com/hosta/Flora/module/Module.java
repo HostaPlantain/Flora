@@ -11,16 +11,13 @@ import com.hosta.Flora.registry.RegistryHandler;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.Potion;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.common.brewing.IBrewingRecipe;
 import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
-public abstract class Module {
+public abstract class Module implements IRegisterer {
 
 	protected IMod			mod;
 	private RegistryHandler	registry;
@@ -33,10 +30,6 @@ public abstract class Module {
 	public static boolean isModLoaded(String modName)
 	{
 		return ModList.get().isLoaded(modName);
-	}
-
-	public void setup(FMLCommonSetupEvent event)
-	{
 	}
 
 	public void set(IMod mod, RegistryHandler registry)
@@ -68,32 +61,12 @@ public abstract class Module {
 		return registry.register(name, entry);
 	}
 
-	public void registerBlocks()
-	{
-	}
-
-	public void registerTileEntities()
-	{
-	}
-
-	public void registerItems()
-	{
-	}
-
-	public void registerEffects()
-	{
-	}
-
 	public static void registerPotions(RegistryHandler registry, List<Effect> list)
 	{
 		for (Effect effct : list)
 		{
 			register(registry, effct.getRegistryName().getPath(), new PotionBase(effct));
 		}
-	}
-
-	public void registerPotions(List<Effect> potions)
-	{
 	}
 
 	private final List<IBrewingRecipe> BREWINGS = new ArrayList<IBrewingRecipe>();
@@ -112,23 +85,6 @@ public abstract class Module {
 		{
 			BrewingRecipeRegistry.addRecipe(recipe);
 		}
-	}
-
-	public void registerPotionRecipes(List<Potion> potions)
-	{
-	}
-
-	public void registerRecipes()
-	{
-	}
-
-	public void registerLootModifiers()
-	{
-	}
-
-	@OnlyIn(Dist.CLIENT)
-	public void registerModels()
-	{
 	}
 
 	protected void registerEventHandler(Object handler)
