@@ -9,12 +9,12 @@ import net.minecraft.item.crafting.SpecialRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-public abstract class SpecialRecipeBase extends SpecialRecipe {
+public abstract class RecipeBase extends SpecialRecipe {
 
 	protected final int	MIN_SIZE;
 	protected final int	MAX_SIZE;
 
-	public SpecialRecipeBase(ResourceLocation idIn, int min, int max)
+	public RecipeBase(ResourceLocation idIn, int min, int max)
 	{
 		super(idIn);
 		this.MIN_SIZE = min;

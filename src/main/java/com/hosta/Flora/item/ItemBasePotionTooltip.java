@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class ItemBasePotionTooltip extends ItemBase implements IhasPotionList {
+public class ItemBasePotionTooltip extends ItemBase implements IPotionList {
 
 	public ItemBasePotionTooltip(IMod mod)
 	{

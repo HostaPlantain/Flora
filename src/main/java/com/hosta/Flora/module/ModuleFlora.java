@@ -1,19 +1,21 @@
 package com.hosta.Flora.module;
 
 import com.hosta.Flora.Flora;
-import com.hosta.Flora.event.EventHandler;
+import com.hosta.Flora.event.EventHandlerFlora;
 import com.hosta.Flora.loot.LootModifierSingle;
-import com.hosta.Flora.recipe.RecipeAppendEffect;
-import com.hosta.Flora.recipe.RecipeNaming;
+import com.hosta.Flora.recipe.flora.RecipeAppendDurability;
+import com.hosta.Flora.recipe.flora.RecipeAppendEffect;
+import com.hosta.Flora.recipe.flora.RecipeNaming;
 
 import net.minecraft.item.crafting.SpecialRecipeSerializer;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
-public class ModuleFlora extends AbstractModule {
+public class ModuleFlora extends Module {
 
 	@Override
-	public void preInit()
+	public void preInit(FMLCommonSetupEvent event)
 	{
-		registerEventHandler(new EventHandler());
+		registerEventHandler(new EventHandlerFlora());
 	}
 
 	@Override
@@ -24,6 +26,7 @@ public class ModuleFlora extends AbstractModule {
 			register("crafting_special_naming", new SpecialRecipeSerializer<RecipeNaming>(RecipeNaming::new));
 		}
 		register("crafting_effect", new RecipeAppendEffect.Serializer());
+		register("crafting_durability", new RecipeAppendDurability.Serializer());
 	}
 
 	@Override

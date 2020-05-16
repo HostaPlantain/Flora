@@ -11,7 +11,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public interface IhasPotionList {
+public interface IPotionList {
 
 	public default void addToGroup(NonNullList<ItemStack> items, Item item)
 	{

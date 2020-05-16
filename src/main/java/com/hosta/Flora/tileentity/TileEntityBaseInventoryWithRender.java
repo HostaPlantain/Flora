@@ -7,9 +7,9 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.TileEntityType;
 
-public class TileEntityInventoryWithRender extends TileEntityInventory {
+public class TileEntityBaseInventoryWithRender extends TileEntityBaseInventory {
 
-	public TileEntityInventoryWithRender(TileEntityType<?> tileEntityTypeIn, int size)
+	public TileEntityBaseInventoryWithRender(TileEntityType<?> tileEntityTypeIn, int size)
 	{
 		super(tileEntityTypeIn, size);
 	}

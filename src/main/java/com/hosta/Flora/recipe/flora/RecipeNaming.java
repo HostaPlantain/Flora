@@ -1,5 +1,6 @@
-package com.hosta.Flora.recipe;
+package com.hosta.Flora.recipe.flora;
 
+import com.hosta.Flora.recipe.RecipeBase;
 import com.hosta.Flora.util.ColorHelper;
 
 import net.minecraft.inventory.CraftingInventory;
@@ -10,7 +11,7 @@ import net.minecraft.item.NameTagItem;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
-public class RecipeNaming extends SpecialRecipeBase {
+public class RecipeNaming extends RecipeBase {
 
 	public RecipeNaming(ResourceLocation idIn)
 	{

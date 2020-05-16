@@ -16,14 +16,26 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.common.brewing.IBrewingRecipe;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
-public abstract class AbstractModule {
+public abstract class Module {
 
 	protected IMod			mod;
 	private RegistryHandler	registry;
 
-	public void preInit()
+	public boolean isEnable()
+	{
+		return true;
+	}
+
+	public static boolean isModLoaded(String modName)
+	{
+		return ModList.get().isLoaded(modName);
+	}
+
+	public void preInit(FMLCommonSetupEvent event)
 	{
 	}
 
@@ -48,7 +60,12 @@ public abstract class AbstractModule {
 
 	protected <V extends IForgeRegistryEntry<V>> V register(String name, V entry)
 	{
-		return this.registry.register(name, entry);
+		return register(this.registry, name, entry);
+	}
+
+	protected static <V extends IForgeRegistryEntry<V>> V register(RegistryHandler registry, String name, V entry)
+	{
+		return registry.register(name, entry);
 	}
 
 	public void registerBlocks()
@@ -67,12 +84,16 @@ public abstract class AbstractModule {
 	{
 	}
 
-	public void registerPotions(List<Effect> list)
+	public static void registerPotions(RegistryHandler registry, List<Effect> list)
 	{
 		for (Effect effct : list)
 		{
-			register(effct.getRegistryName().getPath(), new PotionBase(effct));
+			register(registry, effct.getRegistryName().getPath(), new PotionBase(effct));
 		}
+	}
+
+	public void registerPotions(List<Effect> potions)
+	{
 	}
 
 	private final List<IBrewingRecipe> BREWINGS = new ArrayList<IBrewingRecipe>();
@@ -83,9 +104,9 @@ public abstract class AbstractModule {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void registerRecipeAll(List<?> list)
+	public void registerRecipeAll(List<?> potions)
 	{
-		registerPotionRecipes((List<Potion>) list);
+		registerPotionRecipes((List<Potion>) potions);
 		registerRecipes();
 		for (IBrewingRecipe recipe : BREWINGS)
 		{
@@ -93,7 +114,7 @@ public abstract class AbstractModule {
 		}
 	}
 
-	public void registerPotionRecipes(List<Potion> list)
+	public void registerPotionRecipes(List<Potion> potions)
 	{
 	}
 

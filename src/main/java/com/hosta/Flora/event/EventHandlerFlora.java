@@ -18,7 +18,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class EventHandler {
+public class EventHandlerFlora {
 
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent

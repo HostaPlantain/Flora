@@ -13,14 +13,14 @@ import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 
-public abstract class SingleItemRecipeBase extends SingleItemRecipe {
+public abstract class RecipeBaseSingleItem extends SingleItemRecipe {
 
-	public SingleItemRecipeBase(IRecipeType<?> type, IRecipeSerializer<?> serializer, ResourceLocation id, String group, Ingredient ingredient, ItemStack result)
+	public RecipeBaseSingleItem(IRecipeType<?> type, IRecipeSerializer<?> serializer, ResourceLocation id, String group, Ingredient ingredient, ItemStack result)
 	{
 		super(type, serializer, id, group, ingredient, result);
 	}
 
-	public static <T extends SingleItemRecipeBase> IRecipeType<T> register(ResourceLocation key)
+	public static <T extends RecipeBaseSingleItem> IRecipeType<T> register(ResourceLocation key)
 	{
 		return Registry.register(Registry.RECIPE_TYPE, key, new IRecipeType<T>()
 		{
@@ -31,11 +31,11 @@ public abstract class SingleItemRecipeBase extends SingleItemRecipe {
 		});
 	}
 
-	public static class Serializer<T extends SingleItemRecipeBase> extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<T> {
+	public static class Serializer<T extends RecipeBaseSingleItem> extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<T> {
 
-		private final SingleItemRecipeBase.Serializer.IRecipeFactory<T> factory;
+		private final RecipeBaseSingleItem.Serializer.IRecipeFactory<T> factory;
 
-		public Serializer(SingleItemRecipeBase.Serializer.IRecipeFactory<T> factory)
+		public Serializer(RecipeBaseSingleItem.Serializer.IRecipeFactory<T> factory)
 		{
 			this.factory = factory;
 		}
@@ -72,7 +72,7 @@ public abstract class SingleItemRecipeBase extends SingleItemRecipe {
 			buffer.writeItemStack(recipe.result);
 		}
 
-		public interface IRecipeFactory<T extends SingleItemRecipeBase> {
+		public interface IRecipeFactory<T extends RecipeBaseSingleItem> {
 			T create(ResourceLocation p_create_1_, String p_create_2_, Ingredient p_create_3_, ItemStack p_create_4_);
 		}
 	}

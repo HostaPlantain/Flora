@@ -13,14 +13,14 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.items.ItemHandlerHelper;
 
-public class TileEntityInventory extends TileEntityBase implements ISidedInventory {
+public class TileEntityBaseInventory extends TileEntityBase implements ISidedInventory {
 
 	private final int[]					DEFAULT_SLOTS;
 	protected NonNullList<ItemStack>	items;
 	protected final int					SIZE;
 	private int							limit	= 64;
 
-	public TileEntityInventory(TileEntityType<?> tileEntityTypeIn, int size)
+	public TileEntityBaseInventory(TileEntityType<?> tileEntityTypeIn, int size)
 	{
 		super(tileEntityTypeIn);
 		this.SIZE = size;

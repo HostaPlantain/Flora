@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
-import com.hosta.Flora.tileentity.TileEntityInventory;
+import com.hosta.Flora.tileentity.TileEntityBaseInventory;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -60,9 +60,9 @@ public class BlockEntityHorizontal extends BlockBaseHorizontal implements ITileE
 	{
 		List<ItemStack> list = super.getDrops(state, builder);
 		TileEntity tileEntity = builder.get(LootParameters.BLOCK_ENTITY);
-		if (tileEntity != null && tileEntity instanceof TileEntityInventory)
+		if (tileEntity != null && tileEntity instanceof TileEntityBaseInventory)
 		{
-			list.addAll(((TileEntityInventory) tileEntity).getDrops());
+			list.addAll(((TileEntityBaseInventory) tileEntity).getDrops());
 		}
 		return list;
 	}
