@@ -1,5 +1,6 @@
 package com.hosta.Flora.recipe.flora;
 
+import com.hosta.Flora.module.ModuleFlora;
 import com.hosta.Flora.recipe.RecipeBase;
 import com.hosta.Flora.util.ColorHelper;
 
@@ -8,6 +9,7 @@ import net.minecraft.item.DyeColor;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.NameTagItem;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
@@ -66,5 +68,11 @@ public class RecipeNaming extends RecipeBase {
 		name.getStyle().setItalic(false);
 		name.getStyle().setColor(color.getTextFormatting());
 		output.setDisplayName(name);
+	}
+
+	@Override
+	public IRecipeSerializer<?> getSerializer()
+	{
+		return ModuleFlora.recipeNaming;
 	}
 }

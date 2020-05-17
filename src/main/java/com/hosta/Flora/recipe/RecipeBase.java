@@ -4,7 +4,6 @@ import com.hosta.Flora.util.FlagHelper;
 
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.SpecialRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -52,11 +51,5 @@ public abstract class RecipeBase extends SpecialRecipe {
 	public boolean canFit(int width, int height)
 	{
 		return (width * height) >= this.MIN_SIZE;
-	}
-
-	@Override
-	public IRecipeSerializer<?> getSerializer()
-	{
-		return null;
 	}
 }

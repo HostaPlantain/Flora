@@ -1,11 +1,13 @@
 package com.hosta.Flora.recipe.flora;
 
 import com.google.gson.JsonObject;
+import com.hosta.Flora.module.ModuleFlora;
 import com.hosta.Flora.recipe.RecipeBaseShapeless;
 import com.hosta.Flora.recipe.RecipeBaseShapelessSerializer;
 
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.ShapedRecipe;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
@@ -77,5 +79,11 @@ public class RecipeAppendDurability extends RecipeBaseShapeless {
 			super.write(buffer, recipe);
 			buffer.writeItemStack(recipe.STACK);
 		}
+	}
+
+	@Override
+	public IRecipeSerializer<?> getSerializer()
+	{
+		return ModuleFlora.recipeDurability;
 	}
 }

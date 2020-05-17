@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.JsonObject;
+import com.hosta.Flora.module.ModuleFlora;
 import com.hosta.Flora.potion.EffectInstanceBuilder;
 import com.hosta.Flora.recipe.RecipeBaseShapeless;
 import com.hosta.Flora.recipe.RecipeBaseShapelessSerializer;
@@ -13,6 +14,7 @@ import com.hosta.Flora.util.UtilHelper;
 
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
@@ -134,5 +136,11 @@ public class RecipeAppendEffect extends RecipeBaseShapeless {
 			super.write(buffer, recipe);
 			buffer.writeShort(recipe.FLAG);
 		}
+	}
+
+	@Override
+	public IRecipeSerializer<?> getSerializer()
+	{
+		return ModuleFlora.recipeEffect;
 	}
 }
