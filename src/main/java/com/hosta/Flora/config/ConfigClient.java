@@ -18,7 +18,7 @@ public class ConfigClient extends AbstractConfig {
 	{
 		builder.comment("Client only settings for Flora lib.").push("client");
 
-		showItemTags = builder.comment("Show item tags on tooltip").translation("flora.configgui.showItemTags").define("showItemTags", true);
+		showItemTags = builder.comment("Show item tags on tooltip").translation("flora.configgui.showItemTags").define("showItemTags", false);
 
 		builder.pop();
 		return this;

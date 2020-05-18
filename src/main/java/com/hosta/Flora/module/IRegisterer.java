@@ -26,6 +26,14 @@ public interface IRegisterer {
 	{
 	}
 
+	public default void registerSurfacebuilders()
+	{
+	}
+
+	public default void registerBiomes()
+	{
+	}
+
 	public default void registerEffects()
 	{
 	}

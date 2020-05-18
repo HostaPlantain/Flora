@@ -24,7 +24,7 @@ public class EventHandlerFlora {
 	@SubscribeEvent
 	public void onItemTooltip(ItemTooltipEvent event)
 	{
-		if (Flora.CONFIG_CLIENT.showItemTags.get())
+		if (Flora.CONFIG_CLIENT.showItemTags.get() && event.getFlags().isAdvanced())
 		{
 			List<ITextComponent> tooltips = event.getToolTip();
 			Set<ResourceLocation> tags = event.getItemStack().getItem().getTags();

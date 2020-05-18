@@ -16,6 +16,8 @@ import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.Potion;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -81,13 +83,15 @@ public class RegistryHandler {
 	private final RegistryBlocks						BLOCKS			= new RegistryBlocks();
 	private final RegistryBase<TileEntityType<?>>		TILE_ENTITIES	= new RegistryBase<TileEntityType<?>>(entry -> entry instanceof TileEntityType<?>);
 	private final RegistryBase<Item>					ITEMS			= new RegistryBase<Item>(entry -> entry instanceof Item);
+	private final RegistryBase<SurfaceBuilder<?>>		SURFACES		= new RegistryBase<SurfaceBuilder<?>>(entry -> entry instanceof SurfaceBuilder<?>);
+	private final RegistryBase<Biome>					BIOMES			= new RegistryBase<Biome>(entry -> entry instanceof Biome);
 	private final RegistryBase<Effect>					EFFECTS			= new RegistryBase<Effect>(entry -> entry instanceof Effect);
 	private final RegistryBase<Potion>					POTIONS			= new RegistryBase<Potion>(entry -> entry instanceof Potion);
 	private final RegistryBase<IRecipeSerializer<?>>	RECIPES			= new RegistryBase<IRecipeSerializer<?>>(entry -> entry instanceof IRecipeSerializer<?>);
 
 	private final RegistryBase<GlobalLootModifierSerializer<?>> LOOT_MODIFIER = new RegistryBase<GlobalLootModifierSerializer<?>>(entry -> entry instanceof GlobalLootModifierSerializer<?>);
 
-	private final RegistryBase<?>[] REGISTRIES = new RegistryBase[] { BLOCKS, ITEMS, TILE_ENTITIES, EFFECTS, POTIONS, RECIPES, LOOT_MODIFIER };
+	private final RegistryBase<?>[] REGISTRIES = new RegistryBase[] { BLOCKS, TILE_ENTITIES, ITEMS, SURFACES, BIOMES, EFFECTS, POTIONS, RECIPES, LOOT_MODIFIER };
 
 	public <V extends IForgeRegistryEntry<V>> V register(String name, V entry)
 	{
@@ -129,6 +133,20 @@ public class RegistryHandler {
 		MODULES.forEach(module -> module.registerItems());
 		BLOCKS.registerItems(this, MOD);
 		ITEMS.registerFinal(event.getRegistry());
+	}
+
+	@SubscribeEvent
+	public void registerSurfacebuilders(RegistryEvent.Register<SurfaceBuilder<?>> event)
+	{
+		MODULES.forEach(module -> module.registerSurfacebuilders());
+		SURFACES.registerFinal(event.getRegistry());
+	}
+
+	@SubscribeEvent
+	public void registerBiomes(RegistryEvent.Register<Biome> event)
+	{
+		MODULES.forEach(module -> module.registerBiomes());
+		BIOMES.registerFinal(event.getRegistry());
 	}
 
 	@SubscribeEvent
@@ -175,5 +193,15 @@ public class RegistryHandler {
 		{
 			module.setup(event);
 		}
+		clear();
+	}
+
+	private void clear()
+	{
+		for (RegistryBase<?> registry : REGISTRIES)
+		{
+			registry.LIST.clear();
+		}
+		MODULES.clear();
 	}
 }
