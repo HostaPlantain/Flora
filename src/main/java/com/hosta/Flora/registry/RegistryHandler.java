@@ -33,7 +33,7 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public class RegistryHandler {
 
-	public static List<RegistryHandler> REGISTRY_HANDLERS = new ArrayList<>();
+	public static final List<RegistryHandler> REGISTRY_HANDLERS = new ArrayList<>();
 
 	public static void registerMod(IMod mod)
 	{
@@ -69,7 +69,7 @@ public class RegistryHandler {
 	private Module getModule(String key, Supplier<Module> supplier)
 	{
 		Module module = null;
-		if (key == null || Module.isModLoaded(key))
+		if (key == null || ModuleModded.isModLoaded(key))
 		{
 			module = supplier.get();
 			if (module instanceof ModuleModded)

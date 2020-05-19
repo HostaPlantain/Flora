@@ -14,7 +14,6 @@ import net.minecraft.potion.Potion;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.common.brewing.IBrewingRecipe;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public abstract class Module implements IRegisterer {
@@ -25,11 +24,6 @@ public abstract class Module implements IRegisterer {
 	public boolean isEnable()
 	{
 		return true;
-	}
-
-	public static boolean isModLoaded(String modName)
-	{
-		return ModList.get().isLoaded(modName);
 	}
 
 	public void set(IMod mod, RegistryHandler registry)
