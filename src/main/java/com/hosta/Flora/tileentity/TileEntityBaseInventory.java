@@ -19,7 +19,7 @@ public class TileEntityBaseInventory extends TileEntityBase implements ISidedInv
 	protected final int					SIZE;
 	private final int[]					DEFAULT_SLOTS;
 	protected NonNullList<ItemStack>	items;
-	private final Ingredient			IN;
+	private final Ingredient			INGREDIENT;
 	private int							limit	= 64;
 
 	public TileEntityBaseInventory(TileEntityType<?> tileEntityTypeIn, int size)
@@ -37,7 +37,7 @@ public class TileEntityBaseInventory extends TileEntityBase implements ISidedInv
 			DEFAULT_SLOTS[i] = i;
 		}
 		this.items = NonNullList.withSize(getSizeInventory(), ItemStack.EMPTY);
-		this.IN = ingredient;
+		this.INGREDIENT = ingredient;
 	}
 
 	public void read(CompoundNBT compound)
@@ -176,7 +176,7 @@ public class TileEntityBaseInventory extends TileEntityBase implements ISidedInv
 
 	public boolean isWhiteListed(ItemStack stack)
 	{
-		return this.IN == null || this.IN.test(stack);
+		return this.INGREDIENT == null || this.INGREDIENT.test(stack);
 	}
 
 	public Collection<ItemStack> getDrops()

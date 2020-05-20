@@ -193,10 +193,9 @@ public class RegistryHandler {
 		{
 			module.setup(event);
 		}
-		clear();
 	}
 
-	private void clear()
+	protected void clear()
 	{
 		for (RegistryBase<?> registry : REGISTRIES)
 		{

@@ -18,11 +18,11 @@ import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.LootContext.Builder;
 import net.minecraft.world.storage.loot.LootParameters;
 
-public class BlockEntityHorizontal extends BlockBaseHorizontal implements ITileEntitySupplier {
+public class BlockEntityBaseHorizontal extends BlockBaseHorizontal implements ITileEntitySupplier {
 
 	private final Supplier<TileEntity> SUPPLIER;
 
-	public BlockEntityHorizontal(Block.Properties property, Supplier<TileEntity> supplier)
+	public BlockEntityBaseHorizontal(Block.Properties property, Supplier<TileEntity> supplier)
 	{
 		super(property);
 		this.SUPPLIER = supplier;
