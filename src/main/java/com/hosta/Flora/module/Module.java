@@ -18,8 +18,20 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public abstract class Module implements IRegisterer {
 
+	protected final String NAME;
+
 	protected IMod			mod;
 	private RegistryHandler	registry;
+
+	public Module()
+	{
+		this(null);
+	}
+
+	public Module(String name)
+	{
+		NAME = name;
+	}
 
 	public boolean isEnable()
 	{

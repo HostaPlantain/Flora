@@ -1,8 +1,8 @@
 package com.hosta.Flora.world.gen.path;
 
+import com.hosta.Flora.world.biome.BiomeBase;
+
 import net.minecraft.block.BlockState;
-import net.minecraft.block.DoublePlantBlock;
-import net.minecraft.state.properties.DoubleBlockHalf;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -138,21 +138,27 @@ public abstract class AbstractWorldGenRoad implements IWorldGenRoad {
 
 	private static final Direction[] UPDATE_ORDER = new Direction[] { Direction.WEST, Direction.NORTH, Direction.UP };
 
+	protected void setBlockstate(IWorld world, BlockPos pos, BlockState state)
+	{
+		setBlockstate(world, pos, state, false);
+	}
+
 	protected void setBlockstate(IWorld world, BlockPos pos, BlockState state, boolean flag)
 	{
-		world.setBlockState(pos, state, 3);
-		if (state.getBlock() instanceof DoublePlantBlock)
-		{
-			world.setBlockState(pos.up(), state.with(DoublePlantBlock.HALF, DoubleBlockHalf.UPPER), 3);
-		}
+		BiomeBase.setBlockState(world, pos, state);
 		if (flag)
 		{
-			for (Direction d : UPDATE_ORDER)
-			{
-				tryToupdate(world, pos.offset(d));
-			}
-			tryToupdate(world, pos);
+			updateBlockState(world, pos);
 		}
+	}
+
+	private void updateBlockState(IWorld world, BlockPos pos)
+	{
+		for (Direction d : UPDATE_ORDER)
+		{
+			tryToupdate(world, pos.offset(d));
+		}
+		tryToupdate(world, pos);
 	}
 
 	protected void tryToupdate(IWorld world, BlockPos pos)

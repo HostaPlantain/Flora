@@ -22,10 +22,7 @@ public interface IPotionList {
 				items.add(PotionUtils.addPotionToItemStack(new ItemStack(item), potion));
 			}
 		}
-		else
-		{
-			items.add(new ItemStack(item));
-		}
+		items.add(new ItemStack(item));
 	}
 
 	public Potion[] getPotionList();

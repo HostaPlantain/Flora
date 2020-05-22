@@ -31,6 +31,7 @@ public abstract class TileEntityBaseRenderer<T extends TileEntity> extends TileE
 	protected static final ItemRenderer				ITEM_RENDER		= Minecraft.getInstance().getItemRenderer();
 	protected static final BlockRendererDispatcher	DISPATCHER		= Minecraft.getInstance().getBlockRendererDispatcher();
 	protected static final BlockModelRenderer		BLOCK_RENDER	= DISPATCHER.getBlockModelRenderer();
+	protected static final float[] ROTATE0 = new float[] { 0.0F, 0.0F, 0.0F };
 
 	public TileEntityBaseRenderer(TileEntityRendererDispatcher rendererDispatcherIn)
 	{

@@ -2,18 +2,15 @@ package com.hosta.Flora.module;
 
 import net.minecraftforge.fml.ModList;
 
-public abstract class ModuleModded extends Module {
+public interface IModDependency {
 
-	protected String modName;
+	public void setMod(String modName);
 
-	public void setMod(String modName)
+	public String getModName();
+
+	public default Object getModInstance()
 	{
-		this.modName = modName;
-	}
-
-	public Object getModInstance()
-	{
-		return getModInstance(modName);
+		return getModInstance(getModName());
 	}
 
 	public static boolean isModLoaded(String modName)

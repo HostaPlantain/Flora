@@ -6,8 +6,8 @@ import java.util.function.Supplier;
 
 import com.hosta.Flora.Flora;
 import com.hosta.Flora.IMod;
+import com.hosta.Flora.module.IModDependency;
 import com.hosta.Flora.module.Module;
-import com.hosta.Flora.module.ModuleModded;
 import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.block.Block;
@@ -69,12 +69,12 @@ public class RegistryHandler {
 	private Module getModule(String key, Supplier<Module> supplier)
 	{
 		Module module = null;
-		if (key == null || ModuleModded.isModLoaded(key))
+		if (key == null || IModDependency.isModLoaded(key))
 		{
 			module = supplier.get();
-			if (module instanceof ModuleModded)
+			if (module instanceof IModDependency)
 			{
-				((ModuleModded) module).setMod(key);
+				((IModDependency) module).setMod(key);
 			}
 		}
 		return module;

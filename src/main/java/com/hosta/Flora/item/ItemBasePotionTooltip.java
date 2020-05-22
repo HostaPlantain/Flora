@@ -46,7 +46,7 @@ public class ItemBasePotionTooltip extends ItemBase implements IPotionList {
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
 	{
-		addPotionInformation(stack, tooltip);
+		IPotionList.super.addPotionInformation(stack, tooltip);
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 }

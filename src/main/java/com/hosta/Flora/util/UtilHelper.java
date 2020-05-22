@@ -6,13 +6,16 @@ import java.util.List;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.IProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
 
 public class UtilHelper {
@@ -37,6 +40,13 @@ public class UtilHelper {
 			}
 		}
 		return -1;
+	}
+
+	public static Ingredient getIngredient(ResourceLocation rl)
+	{
+		String item = "{\"item\": \"" +  rl.toString() + "\"}";
+		JsonObject json = (JsonObject) new JsonParser().parse(item);
+		return Ingredient.fromStacks(CraftingHelper.getItemStack((JsonObject) json, false));
 	}
 
 	public static ItemStack getItemStack(JsonObject json)
