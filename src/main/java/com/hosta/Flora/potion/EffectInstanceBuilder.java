@@ -66,6 +66,11 @@ public class EffectInstanceBuilder {
 		}
 	}
 
+	public static EffectInstance passiveOf(int id)
+	{
+		return passiveOf(Effect.get(id));
+	}
+
 	public static EffectInstance passiveOf(Effect effect)
 	{
 		return new EffectInstance(effect, S20, 0, false, false);

@@ -1,6 +1,6 @@
 package com.hosta.Flora.client.registry;
 
-import com.hosta.Flora.util.UtilHelper;
+import com.hosta.Flora.util.ItemHelper;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
@@ -26,7 +26,7 @@ public class ClientRegistries {
 	};
 
 	public static final IItemColor COLOR_FROM_BLOCK = (stack, tintIndex) -> {
-		BlockState blockstate = UtilHelper.getBlockState(stack);
+		BlockState blockstate = ItemHelper.getBlockState(stack);
 		return BLOCK_COLORS.getColor(blockstate, (ILightReader) null, (BlockPos) null, tintIndex);
 	};
 }

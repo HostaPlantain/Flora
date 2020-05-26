@@ -68,7 +68,7 @@ public class RecipeAppendEffect extends RecipeBaseShapeless {
 				list.add(EffectInstanceBuilder.form(effectIn, (short) (FLAG >> WHITELIST.length)));
 			}
 		}
-		ItemStack output = getRecipeOutput().copy();
+		ItemStack output = super.getCraftingResult(inv);
 		PotionUtils.appendEffects(output, list);
 		return output;
 	}
