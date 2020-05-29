@@ -1,5 +1,7 @@
 package com.hosta.Flora.util;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,5 +30,19 @@ public class UtilHelper {
 			}
 		}
 		return -1;
+	}
+
+	public static Field getAccesable(Class<?> clazz, String fieldName) throws NoSuchFieldException, SecurityException
+	{
+		Field field = clazz.getDeclaredField(fieldName);
+		field.setAccessible(true);
+		return field;
+	}
+
+	public static Method getAccesable(Class<?> clazz, String fieldName, Class<?>... args) throws NoSuchMethodException, SecurityException
+	{
+		Method method = clazz.getDeclaredMethod(fieldName, args);
+		method.setAccessible(true);
+		return method;
 	}
 }

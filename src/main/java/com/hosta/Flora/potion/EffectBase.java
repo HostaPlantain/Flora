@@ -5,7 +5,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectType;
 
-public class EffectBase extends Effect {
+public abstract class EffectBase extends Effect {
 
 	public EffectBase(EffectType typeIn, int liquidColorIn)
 	{
@@ -24,9 +24,7 @@ public class EffectBase extends Effect {
 		this.performEffect(entityLivingBaseIn, amplifier);
 	}
 
-	@Override
-	public boolean isReady(int duration, int amplifier)
-	{
-		return false;
-	}
+	public abstract boolean isReady(int duration, int amplifier);
+
+	public abstract boolean isInstant();
 }

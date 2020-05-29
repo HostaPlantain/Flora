@@ -33,11 +33,9 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public class RegistryHandler {
 
-	public static final List<RegistryHandler> REGISTRY_HANDLERS = new ArrayList<>();
-
 	public static void registerMod(IMod mod)
 	{
-		REGISTRY_HANDLERS.add(new RegistryHandler(mod));
+		new RegistryHandler(mod);
 	}
 
 	private final IMod			MOD;

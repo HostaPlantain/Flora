@@ -13,6 +13,11 @@ public abstract class RecipeBase extends SpecialRecipe {
 	protected final int	MIN_SIZE;
 	protected final int	MAX_SIZE;
 
+	public RecipeBase(ResourceLocation idIn, int size)
+	{
+		this(idIn, size, size);
+	}
+
 	public RecipeBase(ResourceLocation idIn, int min, int max)
 	{
 		super(idIn);

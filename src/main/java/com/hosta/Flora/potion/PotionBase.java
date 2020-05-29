@@ -13,6 +13,15 @@ public class PotionBase extends Potion {
 
 	public PotionBase(Effect effect)
 	{
-		this(new EffectInstance(effect, 3600));
+		this(new EffectInstance(effect, initDurationIn(effect)));
+	}
+
+	private static int initDurationIn(Effect effect)
+	{
+		if (effect instanceof EffectBase && ((EffectBase) effect).isInstant())
+		{
+			return 1;
+		}
+		return 3600;
 	}
 }

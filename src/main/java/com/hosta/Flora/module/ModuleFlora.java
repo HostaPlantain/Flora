@@ -5,6 +5,7 @@ import com.hosta.Flora.event.EventHandlerFlora;
 import com.hosta.Flora.loot.LootModifierSingle;
 import com.hosta.Flora.recipe.flora.RecipeAppendDurability;
 import com.hosta.Flora.recipe.flora.RecipeAppendEffect;
+import com.hosta.Flora.recipe.flora.RecipeAttributeModifier;
 import com.hosta.Flora.recipe.flora.RecipeNaming;
 
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -20,6 +21,8 @@ public class ModuleFlora extends Module {
 	public static IRecipeSerializer<?>	recipeEffect;
 	@ObjectHolder(Flora.ID + ":crafting_durability")
 	public static IRecipeSerializer<?>	recipeDurability;
+	@ObjectHolder(Flora.ID + ":crafting_attribute")
+	public static IRecipeSerializer<?>	recipeAttribute;
 
 	@Override
 	public void setup(FMLCommonSetupEvent event)
@@ -36,6 +39,7 @@ public class ModuleFlora extends Module {
 		}
 		register("crafting_effect", new RecipeAppendEffect.Serializer());
 		register("crafting_durability", new RecipeAppendDurability.Serializer());
+		register("crafting_attribute", new SpecialRecipeSerializer<RecipeAttributeModifier>(RecipeAttributeModifier::new));
 	}
 
 	@Override
