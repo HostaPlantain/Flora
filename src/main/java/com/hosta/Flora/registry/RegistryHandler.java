@@ -1,18 +1,25 @@
 package com.hosta.Flora.registry;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 
 import com.hosta.Flora.Flora;
 import com.hosta.Flora.IMod;
 import com.hosta.Flora.module.IModDependency;
 import com.hosta.Flora.module.Module;
+import com.hosta.Flora.util.UtilHelper;
 import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.particles.ParticleType;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.Potion;
 import net.minecraft.tileentity.TileEntityType;
@@ -26,9 +33,11 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.config.ConfigTracker;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
+import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public class RegistryHandler {
@@ -50,7 +59,15 @@ public class RegistryHandler {
 	@SubscribeEvent
 	public void preLoadModules(RegistryEvent.NewRegistry event)
 	{
-		ConfigTracker.INSTANCE.loadConfigs(ModConfig.Type.COMMON, FMLPaths.CONFIGDIR.get());
+		try
+		{
+			loadConfig(ModConfig.Type.COMMON);
+		}
+		catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e)
+		{
+			e.printStackTrace();
+		}
+
 		for (Pair<String, Supplier<Module>> pair : MOD.getModuleList())
 		{
 			Module module = getModule(pair.getFirst(), pair.getSecond());
@@ -62,6 +79,17 @@ public class RegistryHandler {
 			}
 		}
 		MOD.getModuleList().clear();
+	}
+
+	@SuppressWarnings("unchecked")
+	private void loadConfig(ModConfig.Type type) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, NoSuchMethodException, InvocationTargetException
+	{
+		String fileName = String.format("%s-%s.toml", this.MOD.getID(), type.extension());
+		Field field = UtilHelper.getAccesable(ConfigTracker.class, "fileMap");
+		ConcurrentHashMap<String, ModConfig> map = (ConcurrentHashMap<String, ModConfig>) field.get(ConfigTracker.INSTANCE);
+		Method method = UtilHelper.getAccesable(ConfigTracker.class, "openConfig", ModConfig.class, Path.class);
+		method.invoke(ConfigTracker.INSTANCE, map.get(fileName), FMLPaths.CONFIGDIR.get());
+		Flora.LOGGER.debug(String.format("%s is loaded.", fileName));
 	}
 
 	private Module getModule(String key, Supplier<Module> supplier)
@@ -78,102 +106,115 @@ public class RegistryHandler {
 		return module;
 	}
 
-	private final RegistryBlocks						BLOCKS			= new RegistryBlocks();
-	private final RegistryBase<TileEntityType<?>>		TILE_ENTITIES	= new RegistryBase<TileEntityType<?>>(entry -> entry instanceof TileEntityType<?>);
-	private final RegistryBase<Item>					ITEMS			= new RegistryBase<Item>(entry -> entry instanceof Item);
-	private final RegistryBase<SurfaceBuilder<?>>		SURFACES		= new RegistryBase<SurfaceBuilder<?>>(entry -> entry instanceof SurfaceBuilder<?>);
-	private final RegistryBase<Biome>					BIOMES			= new RegistryBase<Biome>(entry -> entry instanceof Biome);
-	private final RegistryBase<Effect>					EFFECTS			= new RegistryBase<Effect>(entry -> entry instanceof Effect);
-	private final RegistryBase<Potion>					POTIONS			= new RegistryBase<Potion>(entry -> entry instanceof Potion);
-	private final RegistryBase<IRecipeSerializer<?>>	RECIPES			= new RegistryBase<IRecipeSerializer<?>>(entry -> entry instanceof IRecipeSerializer<?>);
+	private RegistryBase<?> currentRegistry;
 
-	private final RegistryBase<GlobalLootModifierSerializer<?>> LOOT_MODIFIER = new RegistryBase<GlobalLootModifierSerializer<?>>(entry -> entry instanceof GlobalLootModifierSerializer<?>);
-
-	private final RegistryBase<?>[] REGISTRIES = new RegistryBase[] { BLOCKS, TILE_ENTITIES, ITEMS, SURFACES, BIOMES, EFFECTS, POTIONS, RECIPES, LOOT_MODIFIER };
+	private void setRegistry(RegistryBase<?> registry)
+	{
+		this.currentRegistry = registry;
+	}
 
 	public <V extends IForgeRegistryEntry<V>> V register(String name, V entry)
 	{
 		entry.setRegistryName(this.MOD.getResourceLocation(name));
-		return register(entry);
+		currentRegistry.register(entry);
+		return entry;
 	}
 
-	public <V extends IForgeRegistryEntry<V>> V register(V entry)
+	private void registerFinal(IForgeRegistry<?> registry)
 	{
-		for (RegistryBase<?> registry : REGISTRIES)
-		{
-			if (registry.match(entry))
-			{
-				registry.register(entry);
-				return entry;
-			}
-		}
-		Flora.LOGGER.debug(String.format("%s matchs with nothing!", entry.getRegistryName().toString()), entry);
-		return null;
+		this.currentRegistry.registerFinal(registry);
 	}
+
+	private final RegistryBlocks BLOCKS = new RegistryBlocks();
 
 	@SubscribeEvent
 	public void registerBlocks(RegistryEvent.Register<Block> event)
 	{
+		setRegistry(BLOCKS);
 		MODULES.forEach(module -> module.registerBlocks());
-		BLOCKS.registerFinal(event.getRegistry());
+		registerFinal(event.getRegistry());
 	}
 
 	@SubscribeEvent
 	public void registerTileEntities(RegistryEvent.Register<TileEntityType<?>> event)
 	{
+		setRegistry(new RegistryBase<TileEntityType<?>>());
 		MODULES.forEach(module -> module.registerTileEntities());
-		TILE_ENTITIES.registerFinal(event.getRegistry());
+		registerFinal(event.getRegistry());
 	}
 
 	@SubscribeEvent
 	public void registerItems(RegistryEvent.Register<Item> event)
 	{
+		setRegistry(new RegistryBase<Item>());
 		MODULES.forEach(module -> module.registerItems());
 		BLOCKS.registerItems(this, MOD);
-		ITEMS.registerFinal(event.getRegistry());
+		registerFinal(event.getRegistry());
 	}
 
 	@SubscribeEvent
 	public void registerSurfacebuilders(RegistryEvent.Register<SurfaceBuilder<?>> event)
 	{
+		setRegistry(new RegistryBase<SurfaceBuilder<?>>());
 		MODULES.forEach(module -> module.registerSurfacebuilders());
-		SURFACES.registerFinal(event.getRegistry());
+		registerFinal(event.getRegistry());
 	}
 
 	@SubscribeEvent
 	public void registerBiomes(RegistryEvent.Register<Biome> event)
 	{
+		setRegistry(new RegistryBase<Biome>());
 		MODULES.forEach(module -> module.registerBiomes());
-		BIOMES.registerFinal(event.getRegistry());
+		registerFinal(event.getRegistry());
 	}
+
+	Effect[] EFFECTS;
 
 	@SubscribeEvent
 	public void registerEffects(RegistryEvent.Register<Effect> event)
 	{
+		RegistryBase<Effect> effects = new RegistryBase<Effect>();
+		setRegistry(effects);
 		MODULES.forEach(module -> module.registerEffects());
-		EFFECTS.registerFinal(event.getRegistry());
+		registerFinal(event.getRegistry());
+		EFFECTS = effects.values().toArray(new Effect[effects.size()]);
 	}
+
+	Potion[] POTIONS;
 
 	@SubscribeEvent
 	public void registerPotions(RegistryEvent.Register<Potion> event)
 	{
-		MODULES.forEach(module -> module.registerPotions(EFFECTS.LIST));
-		Module.registerPotions(this, EFFECTS.LIST);
-		POTIONS.registerFinal(event.getRegistry());
+		RegistryBase<Potion> potions = new RegistryBase<Potion>();
+		setRegistry(potions);
+		MODULES.forEach(module -> module.registerPotions(EFFECTS));
+		Module.registerPotions(this, EFFECTS);
+		registerFinal(event.getRegistry());
+		POTIONS = potions.values().toArray(new Potion[potions.size()]);
 	}
 
 	@SubscribeEvent
 	public void registerRecipes(RegistryEvent.Register<IRecipeSerializer<?>> event)
 	{
-		MODULES.forEach(module -> module.registerRecipeAll(POTIONS.values()));
-		RECIPES.registerFinal(event.getRegistry());
+		setRegistry(new RegistryBase<ParticleType<?>>());
+		MODULES.forEach(module -> module.registerRecipeAll(POTIONS));
+		registerFinal(event.getRegistry());
+	}
+
+	@SubscribeEvent
+	public void registerParticleTypes(RegistryEvent.Register<ParticleType<?>> event)
+	{
+		setRegistry(new RegistryBase<ParticleType<?>>());
+		MODULES.forEach(module -> module.registerParticleTypes());
+		registerFinal(event.getRegistry());
 	}
 
 	@SubscribeEvent
 	public void registerLootModifiers(RegistryEvent.Register<GlobalLootModifierSerializer<?>> event)
 	{
+		setRegistry(new RegistryBase<GlobalLootModifierSerializer<?>>());
 		MODULES.forEach(module -> module.registerLootModifiers());
-		LOOT_MODIFIER.registerFinal(event.getRegistry());
+		registerFinal(event.getRegistry());
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -185,7 +226,8 @@ public class RegistryHandler {
 	}
 
 	@SubscribeEvent
-	public void setup(FMLCommonSetupEvent event)
+	@OnlyIn(Dist.CLIENT)
+	public void setup(FMLClientSetupEvent event)
 	{
 		for (Module module : MODULES)
 		{
@@ -193,12 +235,12 @@ public class RegistryHandler {
 		}
 	}
 
-	protected void clear()
+	@SubscribeEvent
+	public void setup(FMLCommonSetupEvent event)
 	{
-		for (RegistryBase<?> registry : REGISTRIES)
+		for (Module module : MODULES)
 		{
-			registry.LIST.clear();
+			module.setup(event);
 		}
-		MODULES.clear();
 	}
 }

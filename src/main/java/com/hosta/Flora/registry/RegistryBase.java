@@ -2,39 +2,46 @@ package com.hosta.Flora.registry;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
+@SuppressWarnings("unchecked")
 public class RegistryBase<T extends IForgeRegistryEntry<T>> {
 
-	protected final List<T>							LIST	= new ArrayList<T>();
-	private final Predicate<IForgeRegistryEntry<?>>	PRE;
+	final List<T> LIST = new ArrayList<T>();
 
-	public RegistryBase(Predicate<IForgeRegistryEntry<?>> pre)
+	protected void register(IForgeRegistryEntry<?> entry)
 	{
-		this.PRE = pre;
+		LIST.add(get(entry));
 	}
 
-	public boolean match(IForgeRegistryEntry<?> entry)
+	private T get(IForgeRegistryEntry<?> entry)
 	{
-		return PRE.test(entry);
+		try
+		{
+			return (T) entry;
+		}
+		catch (Exception e)
+		{
+
+		}
+		return null;
 	}
 
-	@SuppressWarnings("unchecked")
-	public void register(IForgeRegistryEntry<?> entry)
+	protected void registerFinal(IForgeRegistry<?> registry)
 	{
-		LIST.add((T) entry);
+		IForgeRegistry<T> registryT = (IForgeRegistry<T>) registry;
+		LIST.forEach(entry -> registryT.register(get(entry)));
 	}
 
-	public void registerFinal(IForgeRegistry<T> registry)
-	{
-		LIST.forEach(entry -> registry.register(entry));
-	}
-
-	public List<T> values()
+	protected List<T> values()
 	{
 		return new ArrayList<T>(LIST);
+	}
+
+	protected int size()
+	{
+		return LIST.size();
 	}
 }

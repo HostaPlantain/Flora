@@ -15,12 +15,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public class RegistryBlocks extends RegistryBase<Block> {
 
-	public RegistryBlocks()
-	{
-		super(entry -> entry instanceof Block);
-	}
-
-	public void registerItems(RegistryHandler registryHandler, IMod mod)
+	protected void registerItems(RegistryHandler registryHandler, IMod mod)
 	{
 		for (Block block : LIST)
 		{
@@ -36,7 +31,7 @@ public class RegistryBlocks extends RegistryBase<Block> {
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public void registerRenders()
+	protected void registerRenders()
 	{
 		for (Block block : LIST)
 		{

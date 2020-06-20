@@ -10,6 +10,4 @@ public class EnchantmentBase extends Enchantment {
 	{
 		super(rarityIn, typeIn, slots);
 	}
-
-	
 }

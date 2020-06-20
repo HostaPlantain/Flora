@@ -38,7 +38,7 @@ public class EffectHelper {
 	public static boolean mergeEffect(LivingEntity entity, EffectInstance effect, int buffer)
 	{
 		boolean flag = !entity.isPotionActive(effect.getPotion());
-		if (!entity.world.isRemote)
+		if (!entity.world.isRemote())
 		{
 			if (!flag)
 			{

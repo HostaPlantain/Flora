@@ -55,7 +55,7 @@ public class TileEntityBaseInventoryWithRender extends TileEntityBaseInventory {
 
 	private void sendPacket()
 	{
-		if (!this.world.isRemote)
+		if (!this.world.isRemote())
 		{
 			for (PlayerEntity player : getWorld().getPlayers())
 			{

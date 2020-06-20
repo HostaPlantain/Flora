@@ -1,14 +1,18 @@
 package com.hosta.Flora.module;
 
-import java.util.List;
-
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 public interface IRegisterer {
+
+	@OnlyIn(Dist.CLIENT)
+	public default void setup(FMLClientSetupEvent event)
+	{
+	}
 
 	public default void setup(FMLCommonSetupEvent event)
 	{
@@ -38,11 +42,11 @@ public interface IRegisterer {
 	{
 	}
 
-	public default void registerPotions(List<Effect> potions)
+	public default void registerPotions(Effect[] potions)
 	{
 	}
 
-	public default void registerPotionRecipes(List<Potion> potions)
+	public default void registerPotionRecipes(Potion[] potions)
 	{
 	}
 
@@ -51,6 +55,10 @@ public interface IRegisterer {
 	}
 
 	public default void registerLootModifiers()
+	{
+	}
+
+	public default void registerParticleTypes()
 	{
 	}
 

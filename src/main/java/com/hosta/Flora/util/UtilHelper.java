@@ -8,6 +8,10 @@ import java.util.List;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 
+import net.minecraft.particles.IParticleData;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.server.ServerWorld;
+
 public class UtilHelper {
 
 	public static String[] getStringArray(JsonArray json)
@@ -30,6 +34,11 @@ public class UtilHelper {
 			}
 		}
 		return -1;
+	}
+
+	public static void spawnParticle(ServerWorld world, IParticleData particleData, int count, Vec3d pos)
+	{
+		world.spawnParticle(particleData, pos.getX(), pos.getY(), pos.getZ(), count, 0.0F, 0.0F, 0.0F, 0.0F);
 	}
 
 	public static Field getAccesable(Class<?> clazz, String fieldName) throws NoSuchFieldException, SecurityException

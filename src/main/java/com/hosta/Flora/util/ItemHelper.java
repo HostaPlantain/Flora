@@ -5,6 +5,7 @@ import com.google.gson.JsonParser;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
@@ -12,6 +13,7 @@ import net.minecraft.state.IProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class ItemHelper {
 
@@ -25,6 +27,11 @@ public class ItemHelper {
 	public static ItemStack getItemStack(JsonObject json)
 	{
 		return CraftingHelper.getItemStack(json, true);
+	}
+
+	public static Item getItem(ResourceLocation key)
+	{
+		return ForgeRegistries.ITEMS.getValue(key);
 	}
 
 	public static BlockState getBlockState(ItemStack stack)

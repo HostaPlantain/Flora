@@ -59,19 +59,14 @@ public abstract class Module implements IRegisterer {
 
 	protected <V extends IForgeRegistryEntry<V>> V register(String name, V entry)
 	{
-		return register(this.registry, name, entry);
+		return this.registry.register(name, entry);
 	}
 
-	protected static <V extends IForgeRegistryEntry<V>> V register(RegistryHandler registry, String name, V entry)
-	{
-		return registry.register(name, entry);
-	}
-
-	public static void registerPotions(RegistryHandler registry, List<Effect> list)
+	public static void registerPotions(RegistryHandler registry, Effect[] list)
 	{
 		for (Effect effct : list)
 		{
-			register(registry, effct.getRegistryName().getPath(), new PotionBase(effct));
+			registry.register(effct.getRegistryName().getPath(), new PotionBase(effct));
 		}
 	}
 
@@ -82,10 +77,9 @@ public abstract class Module implements IRegisterer {
 		BREWINGS.add(recipe);
 	}
 
-	@SuppressWarnings("unchecked")
-	public void registerRecipeAll(List<?> potions)
+	public void registerRecipeAll(Potion[] potions)
 	{
-		registerPotionRecipes((List<Potion>) potions);
+		registerPotionRecipes(potions);
 		registerRecipes();
 		for (IBrewingRecipe recipe : BREWINGS)
 		{
